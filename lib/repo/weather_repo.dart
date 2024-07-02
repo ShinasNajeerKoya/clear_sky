@@ -9,33 +9,35 @@ class WeatherRepo {
   static Future<GeoData> getGeoData(String cityName) async {
     String url = "$baseUrl/geo/1.0/direct?q=$cityName&limit-=1&appid=$API_KEY";
 
-    var response = await http.get(Uri.parse(url));
-
-    GeoData geoData = GeoData.fromJson(jsonDecode(response.body));
-
-    print(geoData);
-
-    return geoData;
+    try {
+      var response = await http.get(Uri.parse(url));
+      GeoData geoData = GeoData.fromJson(jsonDecode(response.body));
+      return geoData;
+    } catch (errorFound) {
+      rethrow;
+    }
   }
 
   static Future<WeatherData> getWeatherData(GeoData geoData) async {
     String url =
         "$baseUrl/data/2.5/weather?lat=${geoData.lat}&lon=${geoData.lon}&units=metric&appid=$API_KEY";
 
-    var response = await http.get(Uri.parse(url));
-
-    WeatherData weatherData = WeatherData.fromJson(jsonDecode(response.body));
-
-    print(weatherData.toString());
-
-    return weatherData;
+    try {
+      var response = await http.get(Uri.parse(url));
+      WeatherData weatherData = WeatherData.fromJson(jsonDecode(response.body));
+      return weatherData;
+    } catch (errorFound) {
+      rethrow;
+    }
   }
 
   static Future<WeatherData> apiCall(String cityName) async {
-    final GeoData geoData = await getGeoData(cityName);
-
-    final WeatherData weatherData = await getWeatherData(geoData);
-
-    return weatherData;
+    try {
+      final GeoData geoData = await getGeoData(cityName);
+      final WeatherData weatherData = await getWeatherData(geoData);
+      return weatherData;
+    } catch (errorFound) {
+      rethrow;
+    }
   }
 }
