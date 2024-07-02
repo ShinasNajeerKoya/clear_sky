@@ -3,8 +3,12 @@ import 'package:clear_sky/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  WeatherRepo.getGeoData();
+  testApiCall();
   runApp(const MyApp());
+}
+
+void testApiCall() {
+  WeatherRepo.apiCall("udupi");
 }
 
 class MyApp extends StatelessWidget {
