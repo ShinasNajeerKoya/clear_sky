@@ -56,12 +56,14 @@ class DetailsRowContainer extends StatelessWidget {
   final String title;
   final String value;
   final IconData icon;
+  final double? fontSize;
 
   DetailsRowContainer({
     super.key,
     required this.title,
     required this.value,
     required this.icon,
+    this.fontSize,
   });
 
   @override
@@ -73,17 +75,16 @@ class DetailsRowContainer extends StatelessWidget {
       height: SizeConfig.getHeight(90),
       width: (width / 2) - 25,
       padding: EdgeInsets.only(
-          top: SizeConfig.getHeight(18),
-          bottom: SizeConfig.getHeight(5),
-          left: SizeConfig.getHeight(15),
-          right: SizeConfig.getHeight(15)),
+        left: SizeConfig.getHeight(15),
+        right: SizeConfig.getHeight(15),
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               MyText(
                 text: title,
@@ -91,7 +92,7 @@ class DetailsRowContainer extends StatelessWidget {
               ),
               MyText(
                 text: value,
-                fontSize: SizeConfig.getFontSize(40),
+                fontSize: fontSize ?? SizeConfig.getFontSize(35),
                 fontWeight: FontWeight.bold,
               ),
             ],

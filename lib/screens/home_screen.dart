@@ -99,6 +99,71 @@ class _HomeScreenState extends State<HomeScreen> {
                             CustomSizedBox(),
                             CustomContainer(
                               height: SizeConfig.getHeight(250),
+                              padding: EdgeInsets.only(
+                                top: SizeConfig.getHeight(18),
+                                bottom: SizeConfig.getHeight(5),
+                                left: SizeConfig.getHeight(20),
+                                right: SizeConfig.getHeight(20),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: SizeConfig.getHeight(120),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                HeaderRow(
+                                                  icon: CupertinoIcons.calendar,
+                                                  iconSize: 14,
+                                                  details: "Mon, 01 april 2024",
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w100,
+                                                ),
+                                                SizedBox(
+                                                  height: SizeConfig.getHeight(8),
+                                                ),
+                                                HeaderRow(
+                                                  icon: CupertinoIcons.location,
+                                                  iconSize: 14,
+                                                  details: "Mon, 01 april 2024",
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w100,
+                                                ),
+                                              ],
+                                            ),
+                                            HeaderRow(
+                                              icon: CupertinoIcons.cloud,
+                                              iconSize: 18,
+                                              details: "${state.weatherData.weather![0].description}",
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ],
+                                        ),
+                                        Icon(
+                                          Icons.ac_unit_outlined,
+                                          size: 70,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  MyText(
+                                    text: "${state.weatherData.main!.temp}°C",
+                                    fontSize: 70,
+                                    fontWeight: FontWeight.w700,
+                                  )
+                                ],
+                              ),
                             ),
                             CustomSizedBox(),
                             Row(
@@ -106,13 +171,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 DetailsRowContainer(
                                   title: "Humidiy",
-                                  value: "Low",
+                                  value: "${state.weatherData.main!.humidity} %",
                                   icon: CupertinoIcons.drop,
                                 ),
                                 DetailsRowContainer(
-                                  title: "Humidiy",
-                                  value: "Low",
-                                  icon: CupertinoIcons.drop,
+                                  title: "Wind",
+                                  value: "${state.weatherData.wind!.speed} km/h",
+                                  icon: CupertinoIcons.wind,
+                                  fontSize: 25,
                                 ),
                               ],
                             ),
@@ -122,13 +188,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 DetailsRowContainer(
                                   title: "Humidiy",
-                                  value: "Low",
-                                  icon: CupertinoIcons.drop,
+                                  value: "${state.weatherData.main!.tempMin}°C",
+                                  icon: CupertinoIcons.thermometer_snowflake,
+                                  fontSize: 30,
                                 ),
                                 DetailsRowContainer(
                                   title: "Humidiy",
-                                  value: "Low",
-                                  icon: CupertinoIcons.drop,
+                                  value: "${state.weatherData.main!.tempMax}°C",
+                                  icon: CupertinoIcons.thermometer_sun,
+                                  fontSize: 30,
                                 ),
                               ],
                             ),
@@ -189,6 +257,43 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
+    );
+  }
+}
+
+class HeaderRow extends StatelessWidget {
+  final IconData icon;
+  final double iconSize;
+  final double fontSize;
+  final String details;
+  final FontWeight? fontWeight;
+
+  const HeaderRow({
+    super.key,
+    required this.icon,
+    required this.details,
+    required this.iconSize,
+    required this.fontSize,
+    this.fontWeight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: iconSize,
+        ),
+        SizedBox(
+          width: SizeConfig.getWidth(5),
+        ),
+        MyText(
+          text: details,
+          fontSize: fontSize,
+          fontWeight: fontWeight ?? FontWeight.normal,
+        ),
+      ],
     );
   }
 }

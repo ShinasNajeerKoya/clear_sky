@@ -40,7 +40,7 @@ class CustomContainer extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         borderRadius: borderRadius ?? BorderRadius.circular(SizeConfig.getRadius(15)),
-        color: color ?? Colors.white,
+        color: color ?? Colors.white.withOpacity(0.85),
         boxShadow: boxShadow != null ? [boxShadow!] : [],
         border: border,
       ),
