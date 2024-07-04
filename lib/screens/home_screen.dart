@@ -4,6 +4,8 @@ import 'package:clear_sky/bloc/weather_bloc.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/custom_sized_box.dart';
+import 'package:clear_sky/widgets/details_row_container.dart';
+import 'package:clear_sky/widgets/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,13 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      color: Colors.transparent,
-                      child: SafeArea(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              CustomContainer(
+                      padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(15)),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SafeArea(
+                              child: CustomContainer(
                                 margin: EdgeInsets.only(
                                   top: SizeConfig.getHeight(15),
                                 ),
@@ -94,223 +95,77 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
-                              CustomSizedBox(),
-                              CustomContainer(
-                                height: height * 0.25,
-                              ),
-                              CustomSizedBox(),
-                              Container(
-                                height: height * 0.1,
-                                color: Colors.red.withOpacity(0.2),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CustomContainer(
-                                      width: (width / 2) - 25,
-                                    ),
-                                    Container(
-                                      width: (width / 2) - 25,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
+                            ),
+                            CustomSizedBox(),
+                            CustomContainer(
+                              height: SizeConfig.getHeight(250),
+                            ),
+                            CustomSizedBox(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                DetailsRowContainer(
+                                  title: "Humidiy",
+                                  value: "Low",
+                                  icon: CupertinoIcons.drop,
                                 ),
-                              ),
-                              CustomSizedBox(),
-                              Container(
-                                height: height * 0.15,
-                                width: width,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
-                                  itemBuilder: (context, index) => Container(
-                                    width: width / 5,
-                                    margin: EdgeInsets.only(right: SizeConfig.getWidth(10)),
-                                    height: height * 0.1,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(SizeConfig.getRadius(15))),
+                                DetailsRowContainer(
+                                  title: "Humidiy",
+                                  value: "Low",
+                                  icon: CupertinoIcons.drop,
+                                ),
+                              ],
+                            ),
+                            CustomSizedBox(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                DetailsRowContainer(
+                                  title: "Humidiy",
+                                  value: "Low",
+                                  icon: CupertinoIcons.drop,
+                                ),
+                                DetailsRowContainer(
+                                  title: "Humidiy",
+                                  value: "Low",
+                                  icon: CupertinoIcons.drop,
+                                ),
+                              ],
+                            ),
+                            CustomSizedBox(),
+                            CustomContainer(
+                              padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(20)),
+                              height: SizeConfig.getHeight(150),
+                              width: width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  SunRiseSetColumn(
+                                    time: "06:45 AM",
+                                    imageAddress:
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
+                                    title: "Sunrise",
                                   ),
-                                ),
+                                  SunRiseSetColumn(
+                                    time: "06:45 AM",
+                                    imageAddress:
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
+                                    title: "Sunrise",
+                                  ),
+                                ],
                               ),
-                              CustomSizedBox(),
-                              CustomContainer(
-                                height: height * 0.15,
-                                width: width,
-                              ),
-                              CustomSizedBox(),
-                              CustomContainer(
-                                height: height * 0.4,
-                              ),
-                              CustomSizedBox(),
-                              CustomContainer(
-                                height: height * 0.225,
-                              ),
-                              CustomSizedBox(),
-                            ],
-                          ),
+                            ),
+                            CustomSizedBox(),
+                            CustomContainer(
+                              height: SizeConfig.getHeight(350),
+                            ),
+                            CustomSizedBox(),
+                            CustomContainer(
+                              height: SizeConfig.getHeight(180),
+                            ),
+                            CustomSizedBox(),
+                          ],
                         ),
-                        // child: Stack(
-                        //   children: [
-                        //     SingleChildScrollView(
-                        //       child: Column(
-                        //         children: [
-                        //           Container(
-                        //             padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(15)),
-                        //             child: Column(
-                        //               children: [
-                        //
-                        //               ],
-                        //             ),
-                        //           ),
-                        //           SizedBox(height: height * 0.4),
-                        //           // Space for the content that appears above the bottom widgets
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     Positioned(
-                        //       bottom: height * 0.4,
-                        //       child: Container(
-                        //         padding: EdgeInsets.symmetric(
-                        //           horizontal: SizeConfig.getWidth(20),
-                        //           vertical: SizeConfig.getHeight(10),
-                        //         ),
-                        //         width: width,
-                        //         // color: Colors.grey.withOpacity(0.2),
-                        //         child: Column(
-                        //           crossAxisAlignment: CrossAxisAlignment.start,
-                        //           children: [
-                        //             IconTextRow(
-                        //               icon: CupertinoIcons.house,
-                        //               iconSize: SizeConfig.getIconSize(20),
-                        //               text: "Place name",
-                        //               fontWeight: FontWeight.bold,
-                        //             ),
-                        //             Text(
-                        //               "22°C",
-                        //               style: TextStyle(
-                        //                 fontSize: SizeConfig.getFontSize(90),
-                        //                 fontWeight: FontWeight.bold,
-                        //                 letterSpacing: 5,
-                        //               ),
-                        //             ),
-                        //             IconTextRow(
-                        //               icon: CupertinoIcons.thermometer,
-                        //               iconSize: SizeConfig.getIconSize(20),
-                        //               text: "Feels like : 18°C",
-                        //               fontSize: SizeConfig.getFontSize(23),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     Positioned(
-                        //       bottom: 0,
-                        //       child: Container(
-                        //         width: width,
-                        //         height: height * 0.4,
-                        //         padding: EdgeInsets.symmetric(
-                        //             horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(20)),
-                        //         decoration: BoxDecoration(
-                        //           color: Colors.white,
-                        //           borderRadius: BorderRadius.only(
-                        //             topLeft: Radius.circular(
-                        //               SizeConfig.getRadius(20),
-                        //             ),
-                        //             topRight: Radius.circular(
-                        //               SizeConfig.getRadius(20),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         child: Column(
-                        //           children: [
-                        //             DetailsContainerRow(
-                        //               width: width,
-                        //               height: height,
-                        //               icon1: CupertinoIcons.drop,
-                        //               title1: "Humidity",
-                        //               value1: "46%",
-                        //               icon2: CupertinoIcons.wind,
-                        //               title2: "Wind",
-                        //               value2: "29 km/h",
-                        //             ),
-                        //             Divider(
-                        //               thickness: 1,
-                        //             ),
-                        //             DetailsContainerRow(
-                        //               width: width,
-                        //               height: height,
-                        //               icon1: CupertinoIcons.smoke,
-                        //               title1: "Humidity",
-                        //               value1: "2%",
-                        //               icon2: CupertinoIcons.sun_min,
-                        //               title2: "Humidity",
-                        //               value2: "6 of 10",
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     Positioned(
-                        //       bottom: 0,
-                        //       left: 0,
-                        //       right: 0,
-                        //       child: Container(
-                        //         height: height * 0.09,
-                        //         padding: EdgeInsets.symmetric(
-                        //             horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(10)),
-                        //         decoration: BoxDecoration(
-                        //           color: Colors.white,
-                        //           borderRadius: BorderRadius.only(
-                        //             topLeft: Radius.circular(
-                        //               SizeConfig.getRadius(10),
-                        //             ),
-                        //             topRight: Radius.circular(
-                        //               SizeConfig.getRadius(10),
-                        //             ),
-                        //           ),
-                        //           boxShadow: [
-                        //             BoxShadow(
-                        //                 offset: Offset(0, -1),
-                        //                 blurRadius: 10,
-                        //                 spreadRadius: 0,
-                        //                 color: Colors.grey.shade400),
-                        //           ],
-                        //         ),
-                        //         child: GNav(
-                        //           activeColor: Colors.teal.shade900,
-                        //           color: Colors.grey,
-                        //           gap: 5,
-                        //           tabs: [
-                        //             GButton(
-                        //               backgroundColor: Colors.teal.withOpacity(0.1),
-                        //               padding: EdgeInsets.all(SizeConfig.getHeight(15)),
-                        //               icon: CupertinoIcons.home,
-                        //               iconSize: SizeConfig.getIconSize(20),
-                        //               text: "Home",
-                        //             ),
-                        //             GButton(
-                        //               backgroundColor: Colors.teal.withOpacity(0.1),
-                        //               padding: EdgeInsets.all(SizeConfig.getHeight(15)),
-                        //               icon: CupertinoIcons.search,
-                        //               iconSize: SizeConfig.getIconSize(20),
-                        //               text: "Search",
-                        //             ),
-                        //             GButton(
-                        //               backgroundColor: Colors.teal.withOpacity(0.1),
-                        //               padding: EdgeInsets.all(SizeConfig.getHeight(15)),
-                        //               icon: CupertinoIcons.antenna_radiowaves_left_right,
-                        //               text: "Popular",
-                        //               iconSize: SizeConfig.getIconSize(20),
-                        //             ),
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
                       ),
                     ),
                   ),
@@ -338,3 +193,44 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+class SunRiseSetColumn extends StatelessWidget {
+  final String time;
+  final String title;
+  final String imageAddress;
+
+  const SunRiseSetColumn({
+    super.key,
+    required this.time,
+    required this.title,
+    required this.imageAddress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        MyText(
+          text: time,
+          fontWeight: FontWeight.w600,
+          fontSize: 23,
+        ),
+        Container(
+          height: SizeConfig.getHeight(50),
+          width: SizeConfig.getHeight(50),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: NetworkImage(imageAddress),
+            ),
+          ),
+        ),
+        MyText(
+          text: title,
+          fontSize: 13,
+        ),
+      ],
+    );
+  }
+}

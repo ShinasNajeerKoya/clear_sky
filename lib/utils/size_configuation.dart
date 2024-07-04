@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
 
 class SizeConfig {
-  static double screenHeight = 0;
-  static double screenWidth = 0;
+  static late double screenHeight;
+  static late double screenWidth;
 
-  static double heightMultiplier = 0;
-  static double widthMultiplier = 0;
+  static late double heightMultiplier;
+  static late double widthMultiplier;
 
   static void init(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    screenHeight = mediaQuery.size.height;
+    screenWidth = mediaQuery.size.width;
 
-    heightMultiplier = screenHeight / 872.72;
-    widthMultiplier = screenWidth / 392.72;
+    // Portrait Mode
+    if (mediaQuery.orientation == Orientation.portrait) {
+      heightMultiplier = screenHeight / 872.72;
+      widthMultiplier = screenWidth / 392.72;
+    }
+    // Landscape Mode
+    else {
+      heightMultiplier = screenHeight / 392.72;
+      widthMultiplier = screenWidth / 872.72;
+    }
   }
 
   static double getHeight(double height) {
@@ -36,8 +45,7 @@ class SizeConfig {
   }
 
   static int getMaxLines(double containerHeight, double lineHeight) {
-    // Calculate maximum lines based on available container height and line height
     int maxLines = (containerHeight / lineHeight).floor();
-    return maxLines > 2 ? maxLines : 10; // Limit to a maximum of 8 lines
+    return maxLines > 2 ? maxLines : 10;
   }
 }

@@ -55,48 +55,51 @@ class _SearchScreenState extends State<SearchScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: ClipRect(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      color: Colors.transparent,
-                      child: SafeArea(
-                        child: Column(
-                          children: [
-                            CustomContainer(
-                              margin: EdgeInsets.only(
-                                top: SizeConfig.getHeight(15),
-                              ),
-                              padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(12)),
-                              height: SizeConfig.getHeight(55),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: TextField(
-                                      controller: searchController,
-                                      decoration: InputDecoration(
-                                        hintText: "Search Weather...",
-                                        hintStyle: TextStyle(color: Colors.grey.shade400),
-                                        border: InputBorder.none,
+                child: SingleChildScrollView(
+                  child: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        color: Colors.transparent,
+                        child: SafeArea(
+                          child: Column(
+                            children: [
+                              CustomContainer(
+                                margin: EdgeInsets.only(
+                                  top: SizeConfig.getHeight(15),
+                                ),
+                                padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(12)),
+                                height: SizeConfig.getHeight(55),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextField(
+                                        controller: searchController,
+                                        decoration: InputDecoration(
+                                          hintText: "Search Weather...",
+                                          hintStyle: TextStyle(color: Colors.grey.shade400),
+                                          border: InputBorder.none,
+                                        ),
+                                        onSubmitted: (inputValue) {
+                                          // _searchRecipe(inputValue);
+                                        },
                                       ),
-                                      onSubmitted: (inputValue) {
-                                        // _searchRecipe(inputValue);
-                                      },
                                     ),
-                                  ),
-                                  Icon(
-                                    CupertinoIcons.map_pin,
-                                    size: SizeConfig.getIconSize(22),
-                                    color: Colors.grey.shade700,
-                                  ),
-                                ],
+                                    Icon(
+                                      CupertinoIcons.map_pin,
+                                      size: SizeConfig.getIconSize(22),
+                                      color: Colors.grey.shade700,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            CustomSizedBox(),
-                            Expanded(child: CustomContainer()),
-                            CustomSizedBox(),
-                          ],
+                              CustomSizedBox(),
+                              CustomContainer(
+                                height: SizeConfig.getHeight(500),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

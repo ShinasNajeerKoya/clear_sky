@@ -41,14 +41,14 @@ class PopularPlaceWeatherWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomContainer(
-                          height: height * 0.06,
-                          width: height * 0.06,
+                          height: SizeConfig.getHeight(50),
+                          width: SizeConfig.getHeight(50),
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
                         ),
                         Expanded(
                           child: CustomContainer(
-                            height: height * 0.06,
+                            height: SizeConfig.getHeight(50),
                             color: Colors.white.withOpacity(0.2),
                             borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
                             margin: EdgeInsets.only(left: SizeConfig.getWidth(15)),
@@ -63,7 +63,7 @@ class PopularPlaceWeatherWidget extends StatelessWidget {
                         itemCount: 10,
                         shrinkWrap: true,
                         itemBuilder: (context, index) => CustomContainer(
-                          height: height * 0.2,
+                          height: SizeConfig.getHeight(180),
                           width: width,
                           borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
                           margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
