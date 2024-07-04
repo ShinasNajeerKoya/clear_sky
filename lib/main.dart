@@ -1,4 +1,4 @@
-import 'package:clear_sky/screens/home_screen.dart';
+import 'package:clear_sky/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: SearchScreen(),
     );
   }
 }
