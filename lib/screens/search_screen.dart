@@ -4,9 +4,15 @@ import 'package:clear_sky/bloc/weather_bloc.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/custom_sized_box.dart';
+import 'package:clear_sky/widgets/details_row_container.dart';
+import 'package:clear_sky/widgets/my_circular_slider.dart';
+import 'package:clear_sky/widgets/my_icon_text_row.dart';
+import 'package:clear_sky/widgets/my_text.dart';
+import 'package:clear_sky/widgets/sunrise_set_column.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -44,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
           }
           if (state.weatherStatus == WeatherStatus.loaded) {
             return Scaffold(
-              resizeToAvoidBottomInset: false, // it prevents the floating bar to go up with the keyboard
+              resizeToAvoidBottomInset: false, // Prevents the bottom widgets from moving up with the keyboard
               body: Container(
                 height: height,
                 width: width,
@@ -55,17 +61,16 @@ class _SearchScreenState extends State<SearchScreen> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: SingleChildScrollView(
-                  child: ClipRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        color: Colors.transparent,
-                        child: SafeArea(
-                          child: Column(
-                            children: [
-                              CustomContainer(
+                child: ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(15)),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SafeArea(
+                              child: CustomContainer(
                                 margin: EdgeInsets.only(
                                   top: SizeConfig.getHeight(15),
                                 ),
@@ -94,12 +99,155 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ],
                                 ),
                               ),
-                              CustomSizedBox(),
-                              CustomContainer(
-                                height: SizeConfig.getHeight(500),
+                            ),
+                            CustomSizedBox(),
+                            CustomContainer(
+                              height: SizeConfig.getHeight(250),
+                              padding: EdgeInsets.only(
+                                top: SizeConfig.getHeight(18),
+                                bottom: SizeConfig.getHeight(5),
+                                left: SizeConfig.getHeight(20),
+                                right: SizeConfig.getHeight(20),
                               ),
-                            ],
-                          ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: SizeConfig.getHeight(120),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                MyIconTextRow(
+                                                  icon: CupertinoIcons.calendar,
+                                                  iconSize: 14,
+                                                  details: "Mon, 01 april 2024",
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w100,
+                                                ),
+                                                SizedBox(
+                                                  height: SizeConfig.getHeight(8),
+                                                ),
+                                                MyIconTextRow(
+                                                  icon: CupertinoIcons.location,
+                                                  iconSize: 14,
+                                                  details: "Mon, 01 april 2024",
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w100,
+                                                ),
+                                              ],
+                                            ),
+                                            MyIconTextRow(
+                                              icon: CupertinoIcons.cloud,
+                                              iconSize: 18,
+                                              details: "${state.weatherData.weather![0].description}",
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ],
+                                        ),
+                                        Icon(
+                                          Icons.ac_unit_outlined,
+                                          size: 70,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  MyText(
+                                    text: "${state.weatherData.main!.temp}°C",
+                                    fontSize: 65,
+                                    fontWeight: FontWeight.w700,
+                                  )
+                                ],
+                              ),
+                            ),
+                            CustomSizedBox(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                DetailsRowContainer(
+                                  title: "Humidiy",
+                                  value: "${state.weatherData.main!.humidity} %",
+                                  icon: CupertinoIcons.drop,
+                                ),
+                                DetailsRowContainer(
+                                  title: "Wind",
+                                  value: "${state.weatherData.wind!.speed} km/h",
+                                  icon: CupertinoIcons.wind,
+                                  fontSize: 25,
+                                ),
+                              ],
+                            ),
+                            CustomSizedBox(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                DetailsRowContainer(
+                                  title: "Humidiy",
+                                  value: "${state.weatherData.main!.tempMin}°C",
+                                  icon: CupertinoIcons.thermometer_snowflake,
+                                  fontSize: 30,
+                                ),
+                                DetailsRowContainer(
+                                  title: "Humidiy",
+                                  value: "${state.weatherData.main!.tempMax}°C",
+                                  icon: CupertinoIcons.thermometer_sun,
+                                  fontSize: 30,
+                                ),
+                              ],
+                            ),
+                            CustomSizedBox(),
+                            CustomContainer(
+                              padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(20)),
+                              height: SizeConfig.getHeight(150),
+                              width: width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  SunRiseSetColumn(
+                                    time: "06:45 AM",
+                                    imageAddress:
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
+                                    title: "Sunrise",
+                                  ),
+                                  SunRiseSetColumn(
+                                    time: "06:45 AM",
+                                    imageAddress:
+                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
+                                    title: "Sunrise",
+                                  ),
+                                ],
+                              ),
+                            ),
+                            CustomSizedBox(),
+                            CustomContainer(
+                              padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(15)),
+                              height: SizeConfig.getHeight(200),
+                              width: width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  MyText(
+                                    text: "Humidity",
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  MyCircularSlider(
+                                    state: state,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            CustomSizedBox(),
+                          ],
                         ),
                       ),
                     ),
@@ -127,3 +275,5 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+
+

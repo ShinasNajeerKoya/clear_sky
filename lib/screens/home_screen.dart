@@ -1,11 +1,15 @@
 import 'dart:ui';
 
 import 'package:clear_sky/bloc/weather_bloc.dart';
+import 'package:clear_sky/constants/metric_conversion.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/custom_sized_box.dart';
 import 'package:clear_sky/widgets/details_row_container.dart';
+import 'package:clear_sky/widgets/my_circular_slider.dart';
+import 'package:clear_sky/widgets/my_icon_text_row.dart';
 import 'package:clear_sky/widgets/my_text.dart';
+import 'package:clear_sky/widgets/sunrise_set_column.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -122,26 +126,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                HeaderRow(
+                                                MyIconTextRow(
                                                   icon: CupertinoIcons.calendar,
                                                   iconSize: 14,
-                                                  details: "Mon, 01 april 2024",
+                                                  details: DateTimeConversion.formatUnixTimestamp(
+                                                      state.weatherData.sys!.sunset!),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w100,
                                                 ),
                                                 SizedBox(
                                                   height: SizeConfig.getHeight(8),
                                                 ),
-                                                HeaderRow(
+                                                MyIconTextRow(
                                                   icon: CupertinoIcons.location,
                                                   iconSize: 14,
-                                                  details: "Mon, 01 april 2024",
+                                                  details: state.weatherData.name.toString(),
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w100,
                                                 ),
                                               ],
                                             ),
-                                            HeaderRow(
+                                            MyIconTextRow(
                                               icon: CupertinoIcons.cloud,
                                               iconSize: 18,
                                               details: "${state.weatherData.weather![0].description}",
@@ -159,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   MyText(
                                     text: "${state.weatherData.main!.temp}°C",
-                                    fontSize: 70,
+                                    fontSize: 65,
                                     fontWeight: FontWeight.w700,
                                   )
                                 ],
@@ -187,13 +192,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 DetailsRowContainer(
-                                  title: "Humidiy",
+                                  title: "Min Temperature",
                                   value: "${state.weatherData.main!.tempMin}°C",
                                   icon: CupertinoIcons.thermometer_snowflake,
                                   fontSize: 30,
                                 ),
                                 DetailsRowContainer(
-                                  title: "Humidiy",
+                                  title: "Max Temperature",
                                   value: "${state.weatherData.main!.tempMax}°C",
                                   icon: CupertinoIcons.thermometer_sun,
                                   fontSize: 30,
@@ -209,13 +214,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   SunRiseSetColumn(
-                                    time: "06:45 AM",
+                                    time: SunRiseToSetTimeConversion.formatUnixTimestamp(
+                                        state.weatherData.sys!.sunrise!),
                                     imageAddress:
                                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
                                     title: "Sunrise",
                                   ),
                                   SunRiseSetColumn(
-                                    time: "06:45 AM",
+                                    time: SunRiseToSetTimeConversion.formatUnixTimestamp(
+                                        state.weatherData.sys!.sunset!),
                                     imageAddress:
                                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
                                     title: "Sunrise",
@@ -225,11 +232,22 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             CustomSizedBox(),
                             CustomContainer(
-                              height: SizeConfig.getHeight(350),
-                            ),
-                            CustomSizedBox(),
-                            CustomContainer(
-                              height: SizeConfig.getHeight(180),
+                              padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(15)),
+                              height: SizeConfig.getHeight(200),
+                              width: width,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  MyText(
+                                    text: "Humidity",
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  MyCircularSlider(
+                                    state: state,
+                                  ),
+                                ],
+                              ),
                             ),
                             CustomSizedBox(),
                           ],
@@ -257,85 +275,6 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
       ),
-    );
-  }
-}
-
-class HeaderRow extends StatelessWidget {
-  final IconData icon;
-  final double iconSize;
-  final double fontSize;
-  final String details;
-  final FontWeight? fontWeight;
-
-  const HeaderRow({
-    super.key,
-    required this.icon,
-    required this.details,
-    required this.iconSize,
-    required this.fontSize,
-    this.fontWeight,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: iconSize,
-        ),
-        SizedBox(
-          width: SizeConfig.getWidth(5),
-        ),
-        MyText(
-          text: details,
-          fontSize: fontSize,
-          fontWeight: fontWeight ?? FontWeight.normal,
-        ),
-      ],
-    );
-  }
-}
-
-class SunRiseSetColumn extends StatelessWidget {
-  final String time;
-  final String title;
-  final String imageAddress;
-
-  const SunRiseSetColumn({
-    super.key,
-    required this.time,
-    required this.title,
-    required this.imageAddress,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        MyText(
-          text: time,
-          fontWeight: FontWeight.w600,
-          fontSize: 23,
-        ),
-        Container(
-          height: SizeConfig.getHeight(50),
-          width: SizeConfig.getHeight(50),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(imageAddress),
-            ),
-          ),
-        ),
-        MyText(
-          text: title,
-          fontSize: 13,
-        ),
-      ],
     );
   }
 }
