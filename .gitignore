@@ -43,4 +43,5 @@ app.*.map.json
 /android/app/release
 
 
+# Ignore the API endpoints file
 lib/constants/api_endpoint/api_endpoints.dart
