@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = SizeConfig.screenHeight;
     final width = SizeConfig.screenWidth;
     return BlocProvider(
-      create: (context) => WeatherBloc()..add(GetCityNameEvent("udupi")),
+      create: (context) => WeatherBloc()..add(GetCityNameEvent("italy")),
       child: BlocConsumer<WeatherBloc, WeatherState>(
         listener: (context, state) {
           // TODO: implement listener

@@ -18,6 +18,6 @@ class CurrentTimeConversion {
   static String formatSecondsToReadableTime(int seconds) {
     Duration duration = Duration(seconds: seconds);
     DateTime dateTime = DateTime(0).add(duration);
-    return DateFormat('hh:mm').format(dateTime.toUtc());
+    return DateFormat('hh:mm a').format(dateTime.toUtc());
   }
 }
