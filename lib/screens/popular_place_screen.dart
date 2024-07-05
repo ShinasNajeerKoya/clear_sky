@@ -87,7 +87,7 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                           SizedBox(height: SizeConfig.getHeight(15)),
                           ListView.builder(
                             padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(15)),
-                            itemCount: 10,
+                            itemCount: countries.length,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) => CustomContainer(
