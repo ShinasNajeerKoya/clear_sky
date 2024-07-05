@@ -10,7 +10,7 @@ class CustomVerticalDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      width: SizeConfig.getWidth(1),
+      width: SizeConfig.getWidth(0.2),
       height: height,
       color: Colors.grey.shade400,
     );

@@ -8,6 +8,7 @@ class MyIconTextRow extends StatelessWidget {
   final double fontSize;
   final String details;
   final FontWeight? fontWeight;
+  final Color? fontColor;
 
   const MyIconTextRow({
     super.key,
@@ -16,6 +17,7 @@ class MyIconTextRow extends StatelessWidget {
     required this.iconSize,
     required this.fontSize,
     this.fontWeight,
+    this.fontColor,
   });
 
   @override
@@ -25,6 +27,7 @@ class MyIconTextRow extends StatelessWidget {
         Icon(
           icon,
           size: iconSize,
+          color: Colors.white,
         ),
         SizedBox(
           width: SizeConfig.getWidth(5),
@@ -33,6 +36,7 @@ class MyIconTextRow extends StatelessWidget {
           text: details,
           fontSize: fontSize,
           fontWeight: fontWeight ?? FontWeight.normal,
+          color: fontColor,
         ),
       ],
     );

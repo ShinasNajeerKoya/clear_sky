@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:clear_sky/constants/api_endpoints.dart';
+import 'package:clear_sky/constants/api_endpoint/api_endpoints.dart';
 import 'package:clear_sky/models/geo_data_model.dart';
 import 'package:clear_sky/models/weather_data_model.dart';
 import 'package:http/http.dart' as http;

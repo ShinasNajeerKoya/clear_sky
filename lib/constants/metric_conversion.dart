@@ -13,3 +13,11 @@ class DateTimeConversion {
     return DateFormat('EEE, d MMMM yyyy').format(dateTime);
   }
 }
+
+class CurrentTimeConversion {
+  static String formatSecondsToReadableTime(int seconds) {
+    Duration duration = Duration(seconds: seconds);
+    DateTime dateTime = DateTime(0).add(duration);
+    return DateFormat('hh:mm').format(dateTime.toUtc());
+  }
+}

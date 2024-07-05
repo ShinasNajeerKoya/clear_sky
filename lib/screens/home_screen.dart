@@ -5,6 +5,7 @@ import 'package:clear_sky/constants/metric_conversion.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/custom_sized_box.dart';
+import 'package:clear_sky/widgets/custom_vertical_divider.dart';
 import 'package:clear_sky/widgets/details_row_container.dart';
 import 'package:clear_sky/widgets/my_circular_slider.dart';
 import 'package:clear_sky/widgets/my_icon_text_row.dart';
@@ -69,11 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
+                            CustomSizedBox(),
                             SafeArea(
                               child: CustomContainer(
-                                margin: EdgeInsets.only(
-                                  top: SizeConfig.getHeight(15),
-                                ),
                                 padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(12)),
                                 height: SizeConfig.getHeight(55),
                                 child: Row(
@@ -94,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Icon(
                                       CupertinoIcons.map_pin,
                                       size: SizeConfig.getIconSize(22),
-                                      color: Colors.grey.shade700,
+                                      color: Colors.grey.shade400,
                                     ),
                                   ],
                                 ),
@@ -151,13 +150,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                               iconSize: 18,
                                               details: "${state.weatherData.weather![0].description}",
                                               fontSize: 22,
+                                              fontColor: Colors.grey.shade500,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ],
                                         ),
-                                        Icon(
-                                          Icons.ac_unit_outlined,
-                                          size: 70,
+                                        CustomContainer(
+                                          height: SizeConfig.getHeight(100),
+                                          width: SizeConfig.getHeight(100),
+                                          color: Colors.yellow,
+                                          child: Icon(
+                                            Icons.cloud,
+                                            size: 80,
+                                            color: Colors.white,
+                                          ),
                                         )
                                       ],
                                     ),
@@ -178,12 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   title: "Humidiy",
                                   value: "${state.weatherData.main!.humidity} %",
                                   icon: CupertinoIcons.drop,
+                                  fontSize: 25,
                                 ),
                                 DetailsRowContainer(
                                   title: "Wind",
                                   value: "${state.weatherData.wind!.speed} km/h",
                                   icon: CupertinoIcons.wind,
-                                  fontSize: 25,
+                                  fontSize: 20,
                                 ),
                               ],
                             ),
@@ -192,16 +199,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 DetailsRowContainer(
-                                  title: "Min Temperature",
+                                  title: "Minimum",
                                   value: "${state.weatherData.main!.tempMin}°C",
                                   icon: CupertinoIcons.thermometer_snowflake,
-                                  fontSize: 30,
+                                  fontSize: 25,
                                 ),
                                 DetailsRowContainer(
-                                  title: "Max Temperature",
+                                  title: "Maximum",
                                   value: "${state.weatherData.main!.tempMax}°C",
                                   icon: CupertinoIcons.thermometer_sun,
-                                  fontSize: 30,
+                                  fontSize: 25,
                                 ),
                               ],
                             ),
@@ -220,6 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
                                     title: "Sunrise",
                                   ),
+                                  CustomVerticalDivider(),
                                   SunRiseSetColumn(
                                     time: SunRiseToSetTimeConversion.formatUnixTimestamp(
                                         state.weatherData.sys!.sunset!),
@@ -239,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   MyText(
-                                    text: "Humidity",
+                                    text: "Comfort Level",
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),

@@ -1,4 +1,5 @@
 import 'package:clear_sky/bloc/weather_bloc.dart';
+import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
@@ -17,14 +18,31 @@ class MyCircularSlider extends StatelessWidget {
       max: 100,
       initialValue: double.parse("${state.weatherData.main!.humidity}"),
       appearance: CircularSliderAppearance(
-          animationEnabled: true,
-          size: 120,
-          customColors: CustomSliderColors(trackColor: Colors.blue, progressBarColors: [
+        customWidths: CustomSliderWidths(handlerSize: 1.5, trackWidth: 2, progressBarWidth: 10),
+        animationEnabled: true,
+        size: SizeConfig.getHeight(125),
+        customColors: CustomSliderColors(
+          trackColor: Colors.grey.shade300,
+          progressBarColors: [
             Colors.yellow,
             Colors.teal,
             Colors.pink,
             Colors.purple,
-          ])),
+          ],
+        ),
+        infoProperties: InfoProperties(
+            mainLabelStyle: TextStyle(
+              color: Colors.white, // Change the font color of the initial value here
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+            bottomLabelText: "Humidity",
+            bottomLabelStyle: TextStyle(
+              color: Colors.grey.shade700, // Change the font color of the initial value here
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            )),
+      ),
     );
   }
 }
