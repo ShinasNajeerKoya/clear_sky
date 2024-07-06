@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:clear_sky/utils/utils.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/custom_sized_box.dart';
 import 'package:clear_sky/widgets/my_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,7 +56,6 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
             height: height,
             width: width,
             decoration: BoxDecoration(
-              color: Colors.orange.shade100,
               image: DecorationImage(
                   image: AssetImage("assets/bgs/forest_bg.jpg"),
                   fit: BoxFit.cover,
@@ -71,6 +72,7 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
           ),
           SafeArea(
             child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -93,36 +95,35 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       var country = countries[index];
-                      return BlocProvider.value(
-                        value: weatherBlocs[index],
-                        child: BlocConsumer<WeatherBloc, WeatherState>(
-                          listener: (context, state) {
-                            // TODO: implement listener
-                          },
-                          builder: (context, state) {
-                            if (state.isLoading) {
-                              return CustomContainer(
-                                height: SizeConfig.getHeight(180),
-                                width: width,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
-                                color: Colors.black.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
-                                margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
-                                child: Center(child: Text("Loading...")),
-                              );
-                            } else if (state.weatherData != null) {
-                              return CustomContainer(
-                                height: SizeConfig.getHeight(180),
-                                width: width,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: SizeConfig.getWidth(20),
-                                  vertical: SizeConfig.getHeight(15),
-                                ),
-                                color: Colors.black.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
-                                margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
-                                child: Row(
+                      return CustomContainer(
+                        onTap: () {
+                          log("ListView container $index is pressed");
+                          //todo: pass the query (name) of the container here later
+                          log("can pass query of container $index here");
+                        },
+                        height: SizeConfig.getHeight(180),
+                        width: width,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: SizeConfig.getWidth(20),
+                          vertical: SizeConfig.getHeight(15),
+                        ),
+                        color: Colors.black.withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
+                        margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
+                        child: BlocProvider.value(
+                          value: weatherBlocs[index],
+                          child: BlocConsumer<WeatherBloc, WeatherState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state.isLoading) {
+                                return Center(
+                                    child: MyText(
+                                  text: "Loading values...",
+                                ));
+                              } else if (state.weatherData != null) {
+                                return Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
@@ -207,32 +208,18 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                                       ),
                                     )
                                   ],
-                                ),
-                              );
-                            } else if (state.error != null) {
-                              return CustomContainer(
-                                height: SizeConfig.getHeight(180),
-                                width: width,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
-                                color: Colors.black.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
-                                margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
-                                child: Center(child: Text(state.error!)),
-                              );
-                            } else {
-                              return CustomContainer(
-                                height: SizeConfig.getHeight(180),
-                                width: width,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
-                                color: Colors.black.withOpacity(0.7),
-                                borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
-                                margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
-                                child: Center(child: Text("Unknown error")),
-                              );
-                            }
-                          },
+                                );
+                              } else if (state.error != null) {
+                                return Center(
+                                  child: MyText(text: state.error!),
+                                );
+                              } else {
+                                return Center(
+                                  child: MyText(text: "Unknown error"),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       );
                     },
@@ -249,10 +236,15 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomContainer(
+                  onTap: () {
+                    log("popular page backbutton is pressed");
+                    //todo: pop page
+                  },
                   height: SizeConfig.getHeight(50),
                   width: SizeConfig.getHeight(50),
                   color: Colors.grey.shade200,
                   borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
+                  child: Icon(CupertinoIcons.left_chevron),
                 ),
                 Expanded(
                   child: CustomContainer(

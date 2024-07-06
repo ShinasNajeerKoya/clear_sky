@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(),
           useMaterial3: true,
         ),
-        initialRoute: '/popular',
+        initialRoute: '/home',
         routes: {
           '/': (context) => OnboardingScreen(),
           '/home': (context) => HomeScreen(),

@@ -1,4 +1,5 @@
 import 'package:clear_sky/utils/size_configuation.dart';
+import 'package:clear_sky/widgets/custom_sized_box.dart';
 import 'package:clear_sky/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,8 @@ class MyIconTextRow extends StatelessWidget {
   final String details;
   final FontWeight? fontWeight;
   final Color? fontColor;
+  final TextOverflow? overflow;
+  final int? maxLines;
 
   const MyIconTextRow({
     super.key,
@@ -18,6 +21,8 @@ class MyIconTextRow extends StatelessWidget {
     required this.fontSize,
     this.fontWeight,
     this.fontColor,
+    this.overflow,
+    this.maxLines,
   });
 
   @override
@@ -32,11 +37,15 @@ class MyIconTextRow extends StatelessWidget {
         SizedBox(
           width: SizeConfig.getWidth(5),
         ),
-        MyText(
-          text: details,
-          fontSize: fontSize,
-          fontWeight: fontWeight ?? FontWeight.normal,
-          color: fontColor,
+        CustomSizedBox(
+          width: SizeConfig.getWidth(190),
+          height: SizeConfig.getHeight(25),
+          child: MyText(
+            text: details,
+            fontSize: fontSize,
+            fontWeight: fontWeight ?? FontWeight.normal,
+            color: fontColor,
+          ),
         ),
       ],
     );

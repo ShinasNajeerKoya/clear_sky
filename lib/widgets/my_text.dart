@@ -31,6 +31,7 @@ class MyText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+
       style: TextStyle(
         fontSize: fontSize ?? 15.0,
         fontWeight: fontWeight ?? FontWeight.w200,
