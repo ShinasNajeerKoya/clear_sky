@@ -73,6 +73,7 @@ flutter:
     - assets/weather_icons/
     - assets/sun/
     - assets/errors/
+    - assets/details_icons/
 
   #   - images/a_dot_ham.jpeg
 

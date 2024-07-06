@@ -129,13 +129,16 @@ class _SearchScreenState extends State<SearchScreen> {
                                                       CustomSizedBox(
                                                         height: SizeConfig.getHeight(10),
                                                       ),
-                                                      MyIconTextRow(
-                                                        icon: CupertinoIcons.calendar,
-                                                        iconSize: 14,
-                                                        details: DateTimeConversion.formatUnixTimestamp(
-                                                            state.weatherData!.sys!.sunset!),
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.w100,
+                                                      Container(
+                                                        color: Colors.red,
+                                                        child: MyIconTextRow(
+                                                          icon: CupertinoIcons.calendar,
+                                                          iconSize: 15,
+                                                          details: DateTimeConversion.formatUnixTimestamp(
+                                                              state.weatherData!.sys!.sunset!),
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.w100,
+                                                        ),
                                                       ),
                                                       SizedBox(
                                                         height: SizeConfig.getHeight(8),
@@ -183,15 +186,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       DetailsRowContainer(
-                                        title: "Humidiy",
+                                        title: "Time Zone",
                                         value: "${state.weatherData!.main!.humidity} %",
-                                        icon: CupertinoIcons.drop,
+                                        iconImage: "assets/details_icons/time.png",
                                         fontSize: 25,
                                       ),
                                       DetailsRowContainer(
                                         title: "Wind",
                                         value: "${state.weatherData!.wind!.speed} km/h",
-                                        icon: CupertinoIcons.wind,
+                                        iconImage: "assets/details_icons/wind.png",
                                         fontSize: 20,
                                       ),
                                     ],
@@ -203,13 +206,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                       DetailsRowContainer(
                                         title: "Minimum",
                                         value: "${state.weatherData!.main!.tempMin}°C",
-                                        icon: CupertinoIcons.thermometer_snowflake,
+                                        iconImage: "assets/details_icons/cold.png",
                                         fontSize: 25,
                                       ),
                                       DetailsRowContainer(
                                         title: "Maximum",
                                         value: "${state.weatherData!.main!.tempMax}°C",
-                                        icon: CupertinoIcons.thermometer_sun,
+                                        iconImage: "assets/details_icons/hot.png",
                                         fontSize: 25,
                                       ),
                                     ],

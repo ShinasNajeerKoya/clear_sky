@@ -6,17 +6,19 @@ import 'package:flutter/material.dart';
 class DetailsRowContainer extends StatelessWidget {
   final String title;
   final String value;
-  final IconData icon;
+  final String iconImage;
   final double? fontSize;
   final Color? titleColor;
+  final double? letterSpacing;
 
   DetailsRowContainer({
     super.key,
     required this.title,
     required this.value,
-    required this.icon,
+    required this.iconImage,
     this.fontSize,
     this.titleColor,
+    this.letterSpacing,
   });
 
   @override
@@ -48,14 +50,16 @@ class DetailsRowContainer extends StatelessWidget {
                 text: value,
                 fontSize: fontSize ?? SizeConfig.getFontSize(35),
                 fontWeight: FontWeight.bold,
+                letterSpacing: letterSpacing,
               ),
             ],
           ),
-          Icon(
-            icon,
-            size: 32,
-            color: Colors.white,
-          )
+          CustomContainer(
+            borderRadius: BorderRadius.zero,
+            height: 32,
+            width: 32,
+            child: Image.asset(iconImage),
+          ),
         ],
       ),
     );

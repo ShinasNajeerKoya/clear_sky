@@ -1,5 +1,5 @@
 import 'package:clear_sky/utils/size_configuation.dart';
-import 'package:clear_sky/widgets/custom_sized_box.dart';
+import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/my_text.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +28,8 @@ class MyIconTextRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(
           icon,
@@ -35,11 +37,12 @@ class MyIconTextRow extends StatelessWidget {
           color: Colors.white,
         ),
         SizedBox(
-          width: SizeConfig.getWidth(5),
+          width: SizeConfig.getWidth(6),
         ),
-        CustomSizedBox(
+        CustomContainer(
+          color: Colors.transparent,
+          alignment: Alignment.centerLeft,
           width: SizeConfig.getWidth(190),
-          height: SizeConfig.getHeight(25),
           child: MyText(
             text: details,
             fontSize: fontSize,
