@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:ui';
 
+import 'package:clear_sky/bloc/bottom_navigation_bloc/bottom_navigation_bloc.dart';
+import 'package:clear_sky/bloc/bottom_navigation_bloc/bottom_navigation_event.dart';
 import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
 import 'package:clear_sky/constants/metric_conversion.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
@@ -11,6 +13,7 @@ import 'package:clear_sky/widgets/my_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class PopularPlaceScreen extends StatefulWidget {
   const PopularPlaceScreen({super.key});
@@ -238,7 +241,8 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                 CustomContainer(
                   onTap: () {
                     log("popular page backbutton is pressed");
-                    //todo: pop page
+                    context.read<BottomNavigationBloc>().add(BottomNavigateToHomeEvent());
+                    Navigator.pushReplacementNamed(context, '/home');
                   },
                   height: SizeConfig.getHeight(50),
                   width: SizeConfig.getHeight(50),
@@ -262,6 +266,59 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                 ),
               ],
             ),
+          ),
+          BlocBuilder<BottomNavigationBloc, int>(
+            builder: (context, state) {
+              return Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: CustomContainer(
+                  height: SizeConfig.getHeight(60),
+                  width: width,
+                  color: Colors.white.withOpacity(0.5),
+                  padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(7)),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.getWidth(15),
+                    vertical: SizeConfig.getHeight(30),
+                  ),
+                  child: GNav(
+                    tabBorderRadius: SizeConfig.getWidth(10),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: SizeConfig.getWidth(10),
+                      vertical: SizeConfig.getHeight(13),
+                    ),
+                    color: Colors.black,
+                    tabBackgroundColor: Color(0xffd7ff26),
+                    gap: 8,
+                    selectedIndex: state,
+                    onTabChange: (index) {
+                      if (index == 0) {
+                        context.read<BottomNavigationBloc>().add(BottomNavigateToHomeEvent());
+                        Navigator.pushReplacementNamed(context, '/home');
+                      } else if (index == 1) {
+                        context.read<BottomNavigationBloc>().add(BottomNavigateToPopularEvent());
+                        Navigator.pushReplacementNamed(context, '/popular');
+                      }
+                    },
+                    tabs: [
+                      GButton(
+                        icon: CupertinoIcons.home,
+                        iconSize: 20,
+                        text: "Home",
+                        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      GButton(
+                        icon: CupertinoIcons.bookmark,
+                        iconSize: 20,
+                        text: "Popular",
+                        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
