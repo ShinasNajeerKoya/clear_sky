@@ -308,11 +308,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 return CustomContainer(
                   height: SizeConfig.getHeight(60),
                   width: width,
-                  color: Colors.white.withOpacity(0.5),
+                  color: Colors.white.withOpacity(0.2),
                   padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(7)),
                   margin: EdgeInsets.symmetric(
                     horizontal: SizeConfig.getWidth(15),
-                    vertical: SizeConfig.getHeight(30),
+                    vertical: SizeConfig.getHeight(28),
                   ),
                   child: GNav(
                     tabBorderRadius: SizeConfig.getWidth(10),
