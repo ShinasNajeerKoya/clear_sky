@@ -31,7 +31,7 @@ class SunRiseSetColumn extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage(imageAddress),
+              image: AssetImage(imageAddress),
             ),
           ),
         ),

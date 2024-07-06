@@ -71,6 +71,7 @@ flutter:
     - assets/bgs/
     - assets/flags/
     - assets/weather_icons/
+    - assets/sun/
 
   #   - images/a_dot_ham.jpeg
 

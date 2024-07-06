@@ -1,4 +1,4 @@
-import 'package:clear_sky/bloc/weather_bloc.dart';
+import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:flutter/material.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -16,7 +16,7 @@ class MyCircularSlider extends StatelessWidget {
     return SleekCircularSlider(
       min: 0,
       max: 100,
-      initialValue: double.parse("${state.weatherData.main!.humidity}"),
+      initialValue: double.parse("${state.weatherData!.main!.humidity}"),
       appearance: CircularSliderAppearance(
         customWidths: CustomSliderWidths(handlerSize: 1.5, trackWidth: 2, progressBarWidth: 10),
         animationEnabled: true,

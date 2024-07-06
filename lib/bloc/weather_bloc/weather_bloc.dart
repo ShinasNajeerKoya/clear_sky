@@ -8,19 +8,14 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc() : super(WeatherState.initial()) {
-    on<WeatherEvent>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<GetCityNameEvent>((event, emit) async {
-      state.copyWith(weatherStatus: WeatherStatus.loading);
+      emit(state.copyWith(isLoading: true, weatherData: null, error: null));
 
       try {
         WeatherData weatherData = await WeatherRepo.apiCall(event.cityName);
-
-        emit(state.copyWith(weatherStatus: WeatherStatus.loaded, weatherData: weatherData));
+        emit(state.copyWith(isLoading: false, weatherData: weatherData));
       } catch (error) {
-        emit(state.copyWith(weatherStatus: WeatherStatus.error, error: error.toString()));
+        emit(state.copyWith(isLoading: false, error: error.toString()));
       }
     });
   }

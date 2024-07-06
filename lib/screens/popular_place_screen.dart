@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:clear_sky/bloc/weather_bloc.dart';
+import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
 import 'package:clear_sky/constants/metric_conversion.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:clear_sky/utils/utils.dart';
@@ -100,7 +100,7 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                             // TODO: implement listener
                           },
                           builder: (context, state) {
-                            if (state.weatherStatus == WeatherStatus.loading) {
+                            if (state.isLoading) {
                               return CustomContainer(
                                 height: SizeConfig.getHeight(180),
                                 width: width,
@@ -111,8 +111,7 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                                 margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
                                 child: Center(child: Text("Loading...")),
                               );
-                            }
-                            if (state.weatherStatus == WeatherStatus.loaded) {
+                            } else if (state.weatherData != null) {
                               return CustomContainer(
                                 height: SizeConfig.getHeight(180),
                                 width: width,
@@ -169,14 +168,14 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                                                 ),
                                                 MyText(
                                                   text: CurrentTimeConversion.formatSecondsToReadableTime(
-                                                      state.weatherData.timezone!),
+                                                      state.weatherData!.timezone!),
                                                   fontSize: SizeConfig.getFontSize(20),
                                                   letterSpacing: 4,
                                                 )
                                               ],
                                             ),
                                           ),
-                                          MyText(text: "Feels like : ${state.weatherData.main!.feelsLike}°C")
+                                          MyText(text: "Feels like : ${state.weatherData!.main!.feelsLike}°C")
                                         ],
                                       ),
                                     ),
@@ -191,16 +190,16 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                                             color: Colors.transparent,
                                             image: DecorationImage(
                                                 image: AssetImage(
-                                                    weatherIcons[state.weatherData.weather![0].icon] ??
+                                                    weatherIcons[state.weatherData!.weather![0].icon] ??
                                                         'assets/weather_icons/weather_error.png')),
                                           ),
                                           MyText(
-                                            text: "${state.weatherData.main!.temp}°C",
+                                            text: "${state.weatherData!.main!.temp}°C",
                                             fontSize: SizeConfig.getFontSize(25),
                                             fontWeight: FontWeight.bold,
                                           ),
                                           MyText(
-                                            text: "${state.weatherData.weather![0].description}",
+                                            text: "${state.weatherData!.weather![0].description}",
                                             fontSize: 16,
                                             fontWeight: FontWeight.w100,
                                           ),
@@ -210,8 +209,7 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                                   ],
                                 ),
                               );
-                            }
-                            if (state.weatherStatus == WeatherStatus.error) {
+                            } else if (state.error != null) {
                               return CustomContainer(
                                 height: SizeConfig.getHeight(180),
                                 width: width,
@@ -220,19 +218,20 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                                 color: Colors.black.withOpacity(0.7),
                                 borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
                                 margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
-                                child: Center(child: Text(state.error)),
+                                child: Center(child: Text(state.error!)),
+                              );
+                            } else {
+                              return CustomContainer(
+                                height: SizeConfig.getHeight(180),
+                                width: width,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
+                                color: Colors.black.withOpacity(0.7),
+                                borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
+                                margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
+                                child: Center(child: Text("Unknown error")),
                               );
                             }
-                            return CustomContainer(
-                              height: SizeConfig.getHeight(180),
-                              width: width,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
-                              color: Colors.black.withOpacity(0.7),
-                              borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
-                              margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
-                              child: Center(child: Text("Unknown error")),
-                            );
                           },
                         ),
                       );

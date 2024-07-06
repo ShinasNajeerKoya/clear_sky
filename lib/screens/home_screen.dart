@@ -1,8 +1,10 @@
 import 'dart:ui';
 
-import 'package:clear_sky/bloc/weather_bloc.dart';
+import 'package:clear_sky/bloc/search_bloc/search_bloc.dart';
+import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
 import 'package:clear_sky/constants/metric_conversion.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
+import 'package:clear_sky/utils/utils.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/custom_sized_box.dart';
 import 'package:clear_sky/widgets/custom_vertical_divider.dart';
@@ -37,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // TODO: implement listener
         },
         builder: (context, state) {
-          if (state.weatherStatus == WeatherStatus.loading) {
+          if (state.isLoading) {
             return Scaffold(
               appBar: AppBar(
                 title: Text("Weather app using bloc - Loading"),
@@ -48,10 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text("Loading"),
               ),
             );
-          }
-          if (state.weatherStatus == WeatherStatus.loaded) {
+          } else if (state.weatherData != null) {
             return Scaffold(
-              resizeToAvoidBottomInset: false, // Prevents the bottom widgets from moving up with the keyboard
+              resizeToAvoidBottomInset: false, // to prevent the screen move up with the keyboard
               body: Container(
                 height: height,
                 width: width,
@@ -79,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Expanded(
                                       child: TextField(
+                                        style: const TextStyle(color: Colors.white),
                                         controller: searchController,
                                         decoration: InputDecoration(
                                           hintText: "Search Weather...",
@@ -86,7 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           border: InputBorder.none,
                                         ),
                                         onSubmitted: (inputValue) {
-                                          // _searchRecipe(inputValue);
+                                          context
+                                              .read<SearchBloc>()
+                                              .add(FetchSearchResultsEvent(query: inputValue));
+                                          Navigator.pushNamed(context, '/search', arguments: inputValue);
                                         },
                                       ),
                                     ),
@@ -129,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   icon: CupertinoIcons.calendar,
                                                   iconSize: 14,
                                                   details: DateTimeConversion.formatUnixTimestamp(
-                                                      state.weatherData.sys!.sunset!),
+                                                      state.weatherData!.sys!.sunset!),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w100,
                                                 ),
@@ -139,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 MyIconTextRow(
                                                   icon: CupertinoIcons.location,
                                                   iconSize: 14,
-                                                  details: state.weatherData.name.toString(),
+                                                  details: state.weatherData!.name.toString(),
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w100,
                                                 ),
@@ -148,28 +153,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                             MyIconTextRow(
                                               icon: CupertinoIcons.cloud,
                                               iconSize: 18,
-                                              details: "${state.weatherData.weather![0].description}",
+                                              details: "${state.weatherData!.weather![0].description}",
                                               fontSize: 22,
                                               fontColor: Colors.grey.shade500,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ],
                                         ),
-                                        CustomContainer(
+                                        CustomSizedBox(
                                           height: SizeConfig.getHeight(100),
                                           width: SizeConfig.getHeight(100),
-                                          color: Colors.yellow,
-                                          child: Icon(
-                                            Icons.cloud,
-                                            size: 80,
-                                            color: Colors.white,
-                                          ),
+                                          child: Image.asset(
+                                              weatherIcons[state.weatherData!.weather![0].icon] ??
+                                                  'assets/weather_icons/weather_error.png'),
                                         )
                                       ],
                                     ),
                                   ),
                                   MyText(
-                                    text: "${state.weatherData.main!.temp}°C",
+                                    text: "${state.weatherData!.main!.temp}°C",
                                     fontSize: 65,
                                     fontWeight: FontWeight.w700,
                                   )
@@ -182,13 +184,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 DetailsRowContainer(
                                   title: "Humidiy",
-                                  value: "${state.weatherData.main!.humidity} %",
+                                  value: "${state.weatherData!.main!.humidity} %",
                                   icon: CupertinoIcons.drop,
                                   fontSize: 25,
                                 ),
                                 DetailsRowContainer(
                                   title: "Wind",
-                                  value: "${state.weatherData.wind!.speed} km/h",
+                                  value: "${state.weatherData!.wind!.speed} km/h",
                                   icon: CupertinoIcons.wind,
                                   fontSize: 20,
                                 ),
@@ -200,13 +202,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 DetailsRowContainer(
                                   title: "Minimum",
-                                  value: "${state.weatherData.main!.tempMin}°C",
+                                  value: "${state.weatherData!.main!.tempMin}°C",
                                   icon: CupertinoIcons.thermometer_snowflake,
                                   fontSize: 25,
                                 ),
                                 DetailsRowContainer(
                                   title: "Maximum",
-                                  value: "${state.weatherData.main!.tempMax}°C",
+                                  value: "${state.weatherData!.main!.tempMax}°C",
                                   icon: CupertinoIcons.thermometer_sun,
                                   fontSize: 25,
                                 ),
@@ -221,19 +223,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   SunRiseSetColumn(
-                                    time: SunRiseToSetTimeConversion.formatUnixTimestamp(
-                                        state.weatherData.sys!.sunrise!),
-                                    imageAddress:
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
                                     title: "Sunrise",
+                                    time: SunRiseToSetTimeConversion.formatUnixTimestamp(
+                                        state.weatherData!.sys!.sunrise!),
+                                    imageAddress: "assets/sun/sunrise.png",
                                   ),
                                   CustomVerticalDivider(),
                                   SunRiseSetColumn(
+                                    title: "Sunset",
                                     time: SunRiseToSetTimeConversion.formatUnixTimestamp(
-                                        state.weatherData.sys!.sunset!),
-                                    imageAddress:
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
-                                    title: "Sunrise",
+                                        state.weatherData!.sys!.sunset!),
+                                    imageAddress: "assets/sun/sunset.png",
                                   ),
                                 ],
                               ),
@@ -266,21 +266,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             );
-          }
-          if (state.weatherStatus == WeatherStatus.error) {
-            return Scaffold(
-              body: Center(
-                child: Text(state.error),
-              ),
+          } else if (state.error != null) {
+            return CustomContainer(
+              height: SizeConfig.getHeight(180),
+              width: width,
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
+              color: Colors.black.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
+              margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
+              child: Center(child: Text(state.error!)),
+            );
+          } else {
+            return CustomContainer(
+              height: SizeConfig.getHeight(180),
+              width: width,
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
+              color: Colors.black.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
+              margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
+              child: Center(child: Text("Unknown error")),
             );
           }
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("Weather app using bloc - null"),
-              centerTitle: true,
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            ),
-          );
         },
       ),
     );

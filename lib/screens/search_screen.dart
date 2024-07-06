@@ -1,9 +1,13 @@
 import 'dart:ui';
 
-import 'package:clear_sky/bloc/weather_bloc.dart';
+import 'package:clear_sky/bloc/search_bloc/search_bloc.dart';
+import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
+import 'package:clear_sky/constants/metric_conversion.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
+import 'package:clear_sky/utils/utils.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
 import 'package:clear_sky/widgets/custom_sized_box.dart';
+import 'package:clear_sky/widgets/custom_vertical_divider.dart';
 import 'package:clear_sky/widgets/details_row_container.dart';
 import 'package:clear_sky/widgets/my_circular_slider.dart';
 import 'package:clear_sky/widgets/my_icon_text_row.dart';
@@ -12,7 +16,6 @@ import 'package:clear_sky/widgets/sunrise_set_column.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -26,17 +29,18 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final String query = ModalRoute.of(context)!.settings.arguments as String;
     SizeConfig.init(context);
     final height = SizeConfig.screenHeight;
     final width = SizeConfig.screenWidth;
     return BlocProvider(
-      create: (context) => WeatherBloc()..add(GetCityNameEvent("udupi")),
+      create: (context) => WeatherBloc()..add(GetCityNameEvent(query)),
       child: BlocConsumer<WeatherBloc, WeatherState>(
         listener: (context, state) {
           // TODO: implement listener
         },
         builder: (context, state) {
-          if (state.weatherStatus == WeatherStatus.loading) {
+          if (state.isLoading) {
             return Scaffold(
               appBar: AppBar(
                 title: Text("Weather app using bloc - Loading"),
@@ -47,8 +51,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Text("Loading"),
               ),
             );
-          }
-          if (state.weatherStatus == WeatherStatus.loaded) {
+          } else if (state.weatherData != null) {
             return Scaffold(
               resizeToAvoidBottomInset: false, // Prevents the bottom widgets from moving up with the keyboard
               body: Container(
@@ -69,17 +72,16 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
+                            CustomSizedBox(),
                             SafeArea(
                               child: CustomContainer(
-                                margin: EdgeInsets.only(
-                                  top: SizeConfig.getHeight(15),
-                                ),
                                 padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(12)),
                                 height: SizeConfig.getHeight(55),
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: TextField(
+                                        style: TextStyle(color: Colors.white),
                                         controller: searchController,
                                         decoration: InputDecoration(
                                           hintText: "Search Weather...",
@@ -87,14 +89,18 @@ class _SearchScreenState extends State<SearchScreen> {
                                           border: InputBorder.none,
                                         ),
                                         onSubmitted: (inputValue) {
-                                          // _searchRecipe(inputValue);
+                                          context
+                                              .read<SearchBloc>()
+                                              .add(FetchSearchResultsEvent(query: inputValue));
+                                          Navigator.popAndPushNamed(context, '/search',
+                                              arguments: inputValue);
                                         },
                                       ),
                                     ),
                                     Icon(
                                       CupertinoIcons.map_pin,
                                       size: SizeConfig.getIconSize(22),
-                                      color: Colors.grey.shade700,
+                                      color: Colors.grey.shade400,
                                     ),
                                   ],
                                 ),
@@ -129,7 +135,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 MyIconTextRow(
                                                   icon: CupertinoIcons.calendar,
                                                   iconSize: 14,
-                                                  details: "Mon, 01 april 2024",
+                                                  details: DateTimeConversion.formatUnixTimestamp(
+                                                      state.weatherData!.sys!.sunset!),
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.w100,
                                                 ),
@@ -139,7 +146,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 MyIconTextRow(
                                                   icon: CupertinoIcons.location,
                                                   iconSize: 14,
-                                                  details: "Mon, 01 april 2024",
+                                                  details: state.weatherData!.name.toString(),
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w100,
                                                 ),
@@ -148,21 +155,25 @@ class _SearchScreenState extends State<SearchScreen> {
                                             MyIconTextRow(
                                               icon: CupertinoIcons.cloud,
                                               iconSize: 18,
-                                              details: "${state.weatherData.weather![0].description}",
+                                              details: "${state.weatherData!.weather![0].description}",
                                               fontSize: 22,
+                                              fontColor: Colors.grey.shade500,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ],
                                         ),
-                                        Icon(
-                                          Icons.ac_unit_outlined,
-                                          size: 70,
+                                        CustomSizedBox(
+                                          height: SizeConfig.getHeight(100),
+                                          width: SizeConfig.getHeight(100),
+                                          child: Image.asset(
+                                              weatherIcons[state.weatherData!.weather![0].icon] ??
+                                                  'assets/weather_icons/weather_error.png'),
                                         )
                                       ],
                                     ),
                                   ),
                                   MyText(
-                                    text: "${state.weatherData.main!.temp}°C",
+                                    text: "${state.weatherData!.main!.temp}°C",
                                     fontSize: 65,
                                     fontWeight: FontWeight.w700,
                                   )
@@ -175,14 +186,15 @@ class _SearchScreenState extends State<SearchScreen> {
                               children: [
                                 DetailsRowContainer(
                                   title: "Humidiy",
-                                  value: "${state.weatherData.main!.humidity} %",
+                                  value: "${state.weatherData!.main!.humidity} %",
                                   icon: CupertinoIcons.drop,
+                                  fontSize: 25,
                                 ),
                                 DetailsRowContainer(
                                   title: "Wind",
-                                  value: "${state.weatherData.wind!.speed} km/h",
+                                  value: "${state.weatherData!.wind!.speed} km/h",
                                   icon: CupertinoIcons.wind,
-                                  fontSize: 25,
+                                  fontSize: 20,
                                 ),
                               ],
                             ),
@@ -191,16 +203,16 @@ class _SearchScreenState extends State<SearchScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 DetailsRowContainer(
-                                  title: "Humidiy",
-                                  value: "${state.weatherData.main!.tempMin}°C",
+                                  title: "Minimum",
+                                  value: "${state.weatherData!.main!.tempMin}°C",
                                   icon: CupertinoIcons.thermometer_snowflake,
-                                  fontSize: 30,
+                                  fontSize: 25,
                                 ),
                                 DetailsRowContainer(
-                                  title: "Humidiy",
-                                  value: "${state.weatherData.main!.tempMax}°C",
+                                  title: "Maximum",
+                                  value: "${state.weatherData!.main!.tempMax}°C",
                                   icon: CupertinoIcons.thermometer_sun,
-                                  fontSize: 30,
+                                  fontSize: 25,
                                 ),
                               ],
                             ),
@@ -213,16 +225,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   SunRiseSetColumn(
-                                    time: "06:45 AM",
-                                    imageAddress:
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
+                                    time: SunRiseToSetTimeConversion.formatUnixTimestamp(
+                                        state.weatherData!.sys!.sunrise!),
+                                    imageAddress: "assets/sun/sunrise.png",
                                     title: "Sunrise",
                                   ),
+                                  CustomVerticalDivider(),
                                   SunRiseSetColumn(
-                                    time: "06:45 AM",
-                                    imageAddress:
-                                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvtiXfXVlbGafat-ilQrML77x3ageyINjeUY2g0-chh8Cg-kE-nBr3Lv-su9CEZGaz_YE&usqp=CAU",
-                                    title: "Sunrise",
+                                    time: SunRiseToSetTimeConversion.formatUnixTimestamp(
+                                        state.weatherData!.sys!.sunset!),
+                                    imageAddress: "assets/sun/sunset.png",
+                                    title: "Sunset",
                                   ),
                                 ],
                               ),
@@ -236,7 +249,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   MyText(
-                                    text: "Humidity",
+                                    text: "Comfort Level",
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -255,25 +268,31 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
             );
-          }
-          if (state.weatherStatus == WeatherStatus.error) {
-            return Scaffold(
-              body: Center(
-                child: Text(state.error),
-              ),
+          } else if (state.error != null) {
+            return CustomContainer(
+              height: SizeConfig.getHeight(180),
+              width: width,
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
+              color: Colors.black.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
+              margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
+              child: Center(child: Text(state.error!)),
+            );
+          } else {
+            return CustomContainer(
+              height: SizeConfig.getHeight(180),
+              width: width,
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.getWidth(20), vertical: SizeConfig.getHeight(15)),
+              color: Colors.black.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
+              margin: EdgeInsets.only(bottom: SizeConfig.getHeight(15)),
+              child: Center(child: Text("Unknown error")),
             );
           }
-          return Scaffold(
-            appBar: AppBar(
-              title: Text("Weather app using bloc - null"),
-              centerTitle: true,
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            ),
-          );
         },
       ),
     );
   }
 }
-
-
