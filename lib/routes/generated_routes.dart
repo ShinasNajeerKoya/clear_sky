@@ -16,10 +16,7 @@ class RouteGenerator {
           return MaterialPageRoute(builder: (_) => HomeScreen(query: args));
         }
         return _errorRoute();
-      // case '/homeBody':
-      //   return MaterialPageRoute(builder: (_) => HomeScreenBody(
-      //
-      //   ));
+
 
       default:
         return _errorRoute();
