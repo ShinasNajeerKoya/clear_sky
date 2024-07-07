@@ -40,7 +40,7 @@ final List<Map<String, String>> countries = [
   },
   {
     'name': 'United States Of America',
-    'searchName': 'Texas',
+    'searchName': 'Austin',
     'flag': 'assets/flags/usa.png',
   },
   {
