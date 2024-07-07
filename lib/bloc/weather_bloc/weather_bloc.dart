@@ -10,9 +10,10 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc() : super(WeatherState.initial()) {
     on<GetCityNameEvent>(_onGetCityNameEvent);
     on<FetchSearchResultsEvent>(_onFetchSearchResultsEvent);
+    on<FetchCityNameFromPopularEvent>(_onFetchCityNameFromPopularEvent);
   }
 
-  void _onGetCityNameEvent(GetCityNameEvent event, Emitter<WeatherState> emit) async{
+  void _onGetCityNameEvent(GetCityNameEvent event, Emitter<WeatherState> emit) async {
     emit(state.copyWith(isLoading: true, weatherData: null, error: null));
 
     try {
@@ -23,11 +24,23 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     }
   }
 
-  void _onFetchSearchResultsEvent(FetchSearchResultsEvent event, Emitter<WeatherState> emit) async{
+  void _onFetchSearchResultsEvent(FetchSearchResultsEvent event, Emitter<WeatherState> emit) async {
     emit(state.copyWith(isLoading: true, weatherData: null, error: null));
 
     try {
       WeatherData weatherData = await WeatherRepo.apiCall(event.searchValue);
+      emit(state.copyWith(isLoading: false, weatherData: weatherData));
+    } catch (error) {
+      emit(state.copyWith(isLoading: false, error: error.toString()));
+    }
+  }
+
+  void _onFetchCityNameFromPopularEvent(
+      FetchCityNameFromPopularEvent event, Emitter<WeatherState> emit) async {
+    emit(state.copyWith(isLoading: true, weatherData: null, error: null));
+
+    try {
+      WeatherData weatherData = await WeatherRepo.apiCall(event.popularCityName);
       emit(state.copyWith(isLoading: false, weatherData: weatherData));
     } catch (error) {
       emit(state.copyWith(isLoading: false, error: error.toString()));

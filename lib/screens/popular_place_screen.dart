@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
 import 'package:clear_sky/constants/metric_conversion.dart';
+import 'package:clear_sky/screens/home_screen.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
 import 'package:clear_sky/utils/utils.dart';
 import 'package:clear_sky/widgets/custom_container.dart';
@@ -68,17 +69,24 @@ class _PopularScreenBodyState extends State<PopularScreenBody> {
                       log("ListView container $index is pressed");
                       log("can pass query of container ${country['name']!} here");
 
-                      Navigator.pushNamed(
+
+                      Navigator.push(
                         context,
-                        '/home',
-                        arguments: country['searchName']!,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(query: country['searchName']!),
+                        ),
                       );
-                      context.read<WeatherBloc>().add(
-                            FetchSearchResultsEvent(
-                              searchValue: country['searchName']!,
-                              // pageRoute: Navigator.pushNamed(context, '/search', arguments: inputValue),
-                            ),
-                          );
+                      
+                      // Navigator.pushNamed(
+                      //   context,
+                      //   '/home',
+                      // );
+                      // context.read<WeatherBloc>().add(
+                      //       GetCityNameEvent(
+                      //         country['searchName']!,
+                      //         // pageRoute: Navigator.pushNamed(context, '/search', arguments: inputValue),
+                      //       ),
+                      //     );
 
                       // Navigator.popAndPushNamed(context.read<WeatherBloc>().add(
                       //   FetchSearchResultsEvent(

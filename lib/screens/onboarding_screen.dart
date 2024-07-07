@@ -63,7 +63,7 @@ class OnboardingScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const HomeScreen(query: "italy",)),
                 );
               },
               height: SizeConfig.getHeight(60),

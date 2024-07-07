@@ -21,7 +21,9 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 List<Widget> bottomNavScreen = <Widget>[];
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String query;
+
+  const HomeScreen({super.key, required this.query});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -65,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 searchController: searchController,
                 height: height,
                 width: width,
+                query: widget.query,
               ),
             ),
           ),
@@ -116,17 +119,19 @@ class _HomeScreenContent extends StatelessWidget {
   final TextEditingController searchController;
   final double height;
   final double width;
+  final String query;
 
   const _HomeScreenContent(
-      {required this.index, required this.searchController, required this.width, required this.height});
+      {required this.index, required this.searchController, required this.width, required this.height, required this.query});
 
   @override
   Widget build(BuildContext context) {
     switch (index) {
       case 0:
-        return _HomeScreenBody(
+        return HomeScreenBody(
           searchController: searchController,
           width: width,
+          query: query,
         );
       case 1:
         return PopularScreenBody(
@@ -139,17 +144,18 @@ class _HomeScreenContent extends StatelessWidget {
   }
 }
 
-class _HomeScreenBody extends StatelessWidget {
-  final TextEditingController searchController;
+class HomeScreenBody extends StatelessWidget {
+  final TextEditingController? searchController;
   final double width;
+  final String query;
 
-  const _HomeScreenBody({required this.searchController, required this.width});
+  const HomeScreenBody({this.searchController, required this.width, required this.query});
 
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: BlocProvider(
-        create: (context) => WeatherBloc()..add(const GetCityNameEvent("italy")),
+        create: (context) => WeatherBloc()..add(GetCityNameEvent(query)),
         child: BlocConsumer<WeatherBloc, WeatherState>(
           listener: (context, state) {
             // TODO: implement listener
@@ -184,7 +190,7 @@ class _HomeScreenBody extends StatelessWidget {
                             onSubmitted: (inputValue) {
                               context.read<WeatherBloc>().add(
                                     FetchSearchResultsEvent(
-                                      searchValue: searchController.text,
+                                      searchValue: searchController!.text,
                                       // pageRoute: Navigator.pushNamed(context, '/search', arguments: inputValue),
                                     ),
                                   );

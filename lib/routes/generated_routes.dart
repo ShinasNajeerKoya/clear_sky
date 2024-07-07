@@ -12,9 +12,14 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(builder: (_) => OnboardingScreen());
       case '/home':
-        return MaterialPageRoute(builder: (_) => HomeScreen());
-      case '/homeBody':
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        if (args is String) {
+          return MaterialPageRoute(builder: (_) => HomeScreen(query: args));
+        }
+        return _errorRoute();
+      // case '/homeBody':
+      //   return MaterialPageRoute(builder: (_) => HomeScreenBody(
+      //
+      //   ));
 
       default:
         return _errorRoute();
