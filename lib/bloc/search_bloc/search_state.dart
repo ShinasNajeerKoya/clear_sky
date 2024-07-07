@@ -10,12 +10,16 @@ abstract class SearchState extends Equatable {
 class InitialSearchState extends SearchState {}
 
 class SuccessSearchState extends SearchState {
-  final String query;
 
-  const SuccessSearchState(this.query);
+  final Future<Object?> pageRoute;
+
+  const SuccessSearchState({
+
+    required this.pageRoute,
+  });
 
   @override
-  List<Object> get props => [query];
+  List<Object> get props => [pageRoute];
 }
 
 class ErrorSearchState extends SearchState {

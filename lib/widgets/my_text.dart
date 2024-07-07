@@ -4,8 +4,7 @@ class MyText extends StatelessWidget {
   final String text;
   final FontWeight? fontWeight;
   final double? fontSize;
-
-  final Color? color;
+  final Color? fontColor;
   final Color? backgroundColor;
   final double? letterSpacing;
   final double? wordSpacing;
@@ -20,7 +19,7 @@ class MyText extends StatelessWidget {
     this.overflow,
     this.maxLines,
     this.fontWeight,
-    this.color,
+    this.fontColor,
     this.letterSpacing,
     this.wordSpacing,
     this.fontSize,
@@ -34,7 +33,7 @@ class MyText extends StatelessWidget {
       style: TextStyle(
         fontSize: fontSize ?? 15.0,
         fontWeight: fontWeight ?? FontWeight.w200,
-        color: color ?? Colors.white,
+        color: fontColor ?? Colors.white,
         letterSpacing: letterSpacing ?? 0.0,
         wordSpacing: wordSpacing ?? 0.0,
         backgroundColor: backgroundColor ?? Colors.transparent,

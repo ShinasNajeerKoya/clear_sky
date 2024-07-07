@@ -5,10 +5,15 @@ abstract class SearchEvent extends Equatable {
 }
 
 class FetchSearchResultsEvent extends SearchEvent {
-  final String query;
 
-  const FetchSearchResultsEvent({required this.query});
+  final Future<Object?> pageRoute;
+
+  const FetchSearchResultsEvent({
+
+
+    required this.pageRoute,
+  });
 
   @override
-  List<Object> get props => [query];
+  List<Object> get props => [pageRoute];
 }

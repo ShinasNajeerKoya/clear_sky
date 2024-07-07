@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:clear_sky/bloc/bottom_navigation_bloc/bottom_navigation_bloc.dart';
 import 'package:clear_sky/bloc/bottom_navigation_bloc/bottom_navigation_event.dart';
+import 'package:clear_sky/bloc/search_bloc/search_bloc.dart';
 import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
 import 'package:clear_sky/constants/metric_conversion.dart';
 import 'package:clear_sky/utils/size_configuation.dart';
@@ -101,8 +102,13 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                       return CustomContainer(
                         onTap: () {
                           log("ListView container $index is pressed");
-                          //todo: pass the query (name) of the container here later
-                          log("can pass query of container $index here");
+                          log("can pass query of container ${country['name']!} here");
+                          context.read<SearchBloc>().add(
+                                FetchSearchResultsEvent(
+                                  pageRoute: Navigator.popAndPushNamed(context, '/search',
+                                      arguments: country['searchName']!),
+                                ),
+                              );
                         },
                         height: SizeConfig.getHeight(180),
                         width: width,
@@ -260,7 +266,7 @@ class _PopularPlaceScreenState extends State<PopularPlaceScreen> {
                       text: "Popular Places",
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      fontColor: Colors.black,
                     ),
                   ),
                 ),

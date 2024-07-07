@@ -47,7 +47,7 @@ class MyIconTextRow extends StatelessWidget {
             text: details,
             fontSize: fontSize,
             fontWeight: fontWeight ?? FontWeight.normal,
-            color: fontColor,
+            fontColor: fontColor,
           ),
         ),
       ],

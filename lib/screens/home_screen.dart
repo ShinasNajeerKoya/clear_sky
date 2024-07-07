@@ -74,12 +74,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                     hintStyle: TextStyle(color: Colors.grey.shade400),
                                     border: InputBorder.none,
                                   ),
+                                  //todo
                                   onSubmitted: (inputValue) {
-                                    context
-                                        .read<SearchBloc>()
-                                        .add(FetchSearchResultsEvent(query: inputValue));
-                                    Navigator.pushNamed(context, '/search', arguments: inputValue);
+                                    context.read<SearchBloc>().add(
+                                          FetchSearchResultsEvent(
+                                            pageRoute: Navigator.pushNamed(context, '/search',
+                                                arguments: inputValue),
+                                          ),
+                                        );
                                   },
+                                  // onSubmitted: (inputValue) {
+                                  //   context
+                                  //       .read<SearchBloc>()
+                                  //       .add(FetchSearchResultsEvent(query: inputValue));
+                                  //   Navigator.pushNamed(context, '/search', arguments: inputValue);
+                                  // },
                                 ),
                               ),
                               Icon(
@@ -189,7 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           DetailsRowContainer(
-                                            title: "Time Zone",
+                                            title: "Current Time",
                                             value: CurrentTimeConversion.formatSecondsToReadableTime(
                                                 state.weatherData!.timezone!),
                                             iconImage: "assets/details_icons/time.png",

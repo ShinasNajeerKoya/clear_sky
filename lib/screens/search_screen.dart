@@ -75,12 +75,21 @@ class _SearchScreenState extends State<SearchScreen> {
                                     hintStyle: TextStyle(color: Colors.grey.shade400),
                                     border: InputBorder.none,
                                   ),
+                                  //todo
                                   onSubmitted: (inputValue) {
-                                    context
-                                        .read<SearchBloc>()
-                                        .add(FetchSearchResultsEvent(query: inputValue));
-                                    Navigator.popAndPushNamed(context, '/search', arguments: inputValue);
+                                    context.read<SearchBloc>().add(
+                                          FetchSearchResultsEvent(
+                                            pageRoute: Navigator.popAndPushNamed(context, '/search',
+                                                arguments: inputValue),
+                                          ),
+                                        );
                                   },
+                                  // onSubmitted: (inputValue) {
+                                  //   context
+                                  //       .read<SearchBloc>()
+                                  //       .add(FetchSearchResultsEvent(query: inputValue));
+                                  //   Navigator.popAndPushNamed(context, '/search', arguments: inputValue);
+                                  // },
                                 ),
                               ),
                               Icon(
@@ -191,10 +200,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           DetailsRowContainer(
-                                            title: "Time Zone",
-                                            value: "${state.weatherData!.main!.humidity} %",
+                                            title: "Current Time",
+                                            value: CurrentTimeConversion.formatSecondsToReadableTime(
+                                                state.weatherData!.timezone!),
                                             iconImage: "assets/details_icons/time.png",
                                             fontSize: 25,
+                                            letterSpacing: 1,
                                           ),
                                           DetailsRowContainer(
                                             title: "Wind",

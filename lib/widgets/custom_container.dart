@@ -10,10 +10,10 @@ class CustomContainer extends StatelessWidget {
   final Color? color;
   final Alignment? alignment;
   final BorderRadiusGeometry? borderRadius;
-  final BoxShadow? boxShadow;
+  final List<BoxShadow>? boxShadow;
   final BoxBorder? border;
   final DecorationImage? image;
-  final VoidCallback? onTap;
+  final void Function()? onTap;
 
   const CustomContainer({
     super.key,
@@ -49,7 +49,7 @@ class CustomContainer extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: color ?? Colors.black.withOpacity(0.8),
-          boxShadow: boxShadow != null ? [boxShadow!] : [],
+          boxShadow: boxShadow ?? [],
           border: border,
           borderRadius: borderRadius ?? BorderRadius.circular(SizeConfig.getRadius(15)),
           image: image,

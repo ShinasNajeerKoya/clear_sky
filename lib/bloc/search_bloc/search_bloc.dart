@@ -8,7 +8,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc() : super(InitialSearchState()) {
     on<FetchSearchResultsEvent>((event, emit) async {
       try {
-        emit(SuccessSearchState(event.query));
+        emit(
+          SuccessSearchState(pageRoute: event.pageRoute),
+        );
       } on Exception catch (error) {
         emit(ErrorSearchState(error.toString()));
       }

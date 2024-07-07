@@ -44,7 +44,7 @@ class DetailsRowContainer extends StatelessWidget {
               MyText(
                 text: title,
                 fontSize: SizeConfig.getFontSize(15),
-                color: titleColor ?? Colors.grey,
+                fontColor: titleColor ?? Colors.grey,
               ),
               MyText(
                 text: value,
