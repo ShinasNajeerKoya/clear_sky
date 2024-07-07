@@ -8,15 +8,29 @@ part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc() : super(WeatherState.initial()) {
-    on<GetCityNameEvent>((event, emit) async {
-      emit(state.copyWith(isLoading: true, weatherData: null, error: null));
+    on<GetCityNameEvent>(_onGetCityNameEvent);
+    on<FetchSearchResultsEvent>(_onFetchSearchResultsEvent);
+  }
 
-      try {
-        WeatherData weatherData = await WeatherRepo.apiCall(event.cityName);
-        emit(state.copyWith(isLoading: false, weatherData: weatherData));
-      } catch (error) {
-        emit(state.copyWith(isLoading: false, error: error.toString()));
-      }
-    });
+  void _onGetCityNameEvent(GetCityNameEvent event, Emitter<WeatherState> emit) async{
+    emit(state.copyWith(isLoading: true, weatherData: null, error: null));
+
+    try {
+      WeatherData weatherData = await WeatherRepo.apiCall(event.cityName);
+      emit(state.copyWith(isLoading: false, weatherData: weatherData));
+    } catch (error) {
+      emit(state.copyWith(isLoading: false, error: error.toString()));
+    }
+  }
+
+  void _onFetchSearchResultsEvent(FetchSearchResultsEvent event, Emitter<WeatherState> emit) async{
+    emit(state.copyWith(isLoading: true, weatherData: null, error: null));
+
+    try {
+      WeatherData weatherData = await WeatherRepo.apiCall(event.searchValue);
+      emit(state.copyWith(isLoading: false, weatherData: weatherData));
+    } catch (error) {
+      emit(state.copyWith(isLoading: false, error: error.toString()));
+    }
   }
 }

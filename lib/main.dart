@@ -1,10 +1,6 @@
 import 'package:clear_sky/bloc/bottom_navigation_bloc/bottom_navigation_bloc.dart';
-import 'package:clear_sky/bloc/search_bloc/search_bloc.dart';
 import 'package:clear_sky/bloc/weather_bloc/weather_bloc.dart';
-import 'package:clear_sky/screens/home_screen.dart';
-import 'package:clear_sky/screens/onboarding_screen.dart';
-import 'package:clear_sky/screens/popular_place_screen.dart';
-import 'package:clear_sky/screens/search_screen.dart';
+import 'package:clear_sky/routes/generated_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => WeatherBloc()),
-        BlocProvider(create: (context) => SearchBloc()),
+        // BlocProvider(create: (context) => SearchBloc()),
         BlocProvider(create: (context) => BottomNavigationBloc()),
       ],
       child: MaterialApp(
@@ -30,12 +26,14 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         initialRoute: '/',
-        routes: {
-          '/': (context) => OnboardingScreen(),
-          '/home': (context) => HomeScreen(),
-          '/search': (context) => SearchScreen(),
-          '/popular': (context) => PopularPlaceScreen(),
-        },
+
+        onGenerateRoute: RouteGenerator().generateRoute,
+        // routes: {
+        //   '/': (context) => OnboardingScreen(),
+        //   '/home': (context) => HomeScreen(),
+        //   '/search': (context) => SearchScreen(),
+        //   '/popular': (context) => PopularPlaceScreen(),
+        // },
       ),
     );
   }

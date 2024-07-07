@@ -24,11 +24,10 @@ class DetailsRowContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    final height = SizeConfig.screenHeight;
     final width = SizeConfig.screenWidth;
     return CustomContainer(
       height: SizeConfig.getHeight(90),
-      width: (width / 2) - 25,
+      width: (width / 2) - SizeConfig.getHeight(25),
       padding: EdgeInsets.only(
         left: SizeConfig.getHeight(15),
         right: SizeConfig.getHeight(15),
@@ -55,9 +54,10 @@ class DetailsRowContainer extends StatelessWidget {
             ],
           ),
           CustomContainer(
+            color: Colors.transparent,
             borderRadius: BorderRadius.zero,
-            height: 32,
-            width: 32,
+            height: SizeConfig.getHeight(32),
+            width: SizeConfig.getWidth(32),
             child: Image.asset(iconImage),
           ),
         ],

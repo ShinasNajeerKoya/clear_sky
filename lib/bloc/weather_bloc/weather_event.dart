@@ -12,3 +12,16 @@ class GetCityNameEvent extends WeatherEvent {
   @override
   List<Object> get props => [cityName];
 }
+
+class FetchSearchResultsEvent extends WeatherEvent {
+  final String searchValue;
+  // final Future<Object?> pageRoute;
+
+  const FetchSearchResultsEvent({
+    required this.searchValue,
+    // required this.pageRoute,
+  });
+
+  @override
+  List<Object> get props => [];
+}
