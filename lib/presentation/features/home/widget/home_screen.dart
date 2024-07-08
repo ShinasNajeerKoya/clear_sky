@@ -44,7 +44,7 @@ class HomeScreenBody extends StatelessWidget {
                 height: SizeConfig.getHeight(715),
                 width: width,
                 image: const DecorationImage(
-                    image: AssetImage("assets/errors/home_error.png"), fit: BoxFit.fitWidth),
+                    image: AssetImage("assets/errors/search_error.png"), fit: BoxFit.fitWidth),
               );
             } else if (state.dataState == DataState.success) {
               return ListView(

@@ -1,5 +1,3 @@
-
-
 import 'package:equatable/equatable.dart';
 
 abstract class WeatherEvent extends Equatable {
@@ -17,6 +15,7 @@ class GetCityNameEvent extends WeatherEvent {
 
 class FetchSearchResultsEvent extends WeatherEvent {
   final String searchValue;
+
   // final Future<Object?> pageRoute;
 
   const FetchSearchResultsEvent({
@@ -27,5 +26,3 @@ class FetchSearchResultsEvent extends WeatherEvent {
   @override
   List<Object> get props => [];
 }
-
-

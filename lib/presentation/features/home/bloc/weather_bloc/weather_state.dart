@@ -1,7 +1,8 @@
 import 'package:clear_sky/config/base_state/base_state.dart';
 import 'package:clear_sky/data/models/weather_data_model.dart';
+import 'package:equatable/equatable.dart';
 
-class WeatherState extends BaseState {
+class WeatherState extends BaseState with EquatableMixin {
   final WeatherData? weatherData;
   final String? error;
 
@@ -20,4 +21,7 @@ class WeatherState extends BaseState {
       error: error ?? this.error,
     );
   }
+
+  @override
+  List<Object?> get props => [weatherData, error, dataState];
 }

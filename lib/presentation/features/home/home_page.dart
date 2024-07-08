@@ -1,13 +1,11 @@
 import 'dart:ui';
 
 import 'package:clear_sky/presentation/features/home/bloc/bottom_navigation_bloc/bottom_navigation_bloc.dart';
+import 'package:clear_sky/presentation/features/home/widget/custom_bottom_bar.dart';
 import 'package:clear_sky/presentation/features/home/widget/home_screen.dart';
 import 'package:clear_sky/presentation/features/home/widget/popular_place_screen.dart';
-import 'package:clear_sky/presentation/widgets/custom_container.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../../utils/size_configuration.dart';
 
@@ -24,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController searchController = TextEditingController();
 
   int selectedIndex = 0;
+
 // event adding for BNB
   void onTabChange(int index) {
     context.read<BottomNavigationBloc>().add(
@@ -74,41 +73,10 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: CustomContainer(
-              height: SizeConfig.getHeight(60),
+            floatingActionButton: CustomBottomBar(
               width: width,
-              color: Colors.white.withOpacity(0.2),
-              padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(7)),
-              margin: EdgeInsets.symmetric(
-                horizontal: SizeConfig.getWidth(15),
-                vertical: SizeConfig.getHeight(28),
-              ),
-              child: GNav(
-                tabBorderRadius: SizeConfig.getWidth(10),
-                padding: EdgeInsets.symmetric(
-                  horizontal: SizeConfig.getWidth(10),
-                  vertical: SizeConfig.getHeight(13),
-                ),
-                color: Colors.black,
-                tabBackgroundColor: const Color(0xffd7ff26),
-                gap: SizeConfig.getWidth(8),
-                selectedIndex: selectedIndex,
-                onTabChange: onTabChange,
-                tabs: [
-                  GButton(
-                    icon: CupertinoIcons.home,
-                    iconSize: SizeConfig.getIconSize(20),
-                    text: "Home",
-                    textStyle: TextStyle(fontSize: SizeConfig.getFontSize(16), fontWeight: FontWeight.bold),
-                  ),
-                  GButton(
-                    icon: CupertinoIcons.bookmark,
-                    iconSize: SizeConfig.getIconSize(20),
-                    text: "Popular",
-                    textStyle: TextStyle(fontSize: SizeConfig.getFontSize(16), fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
+              selectedIndex: selectedIndex,
+              onTabChange: onTabChange,
             ),
           );
         },

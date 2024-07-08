@@ -2,6 +2,10 @@ import 'package:clear_sky/constants/api_endpoint/api_endpoints.dart';
 import 'package:http/http.dart' as http;
 
 class WeatherService {
+  final http.Client client;
+
+  WeatherService({http.Client? client}) : client = client ?? http.Client();
+
   Future<http.Response> getGeoData(String cityName) async {
     String url = "$baseUrl/geo/1.0/direct?q=$cityName&limit-=1&appid=$API_KEY";
 
