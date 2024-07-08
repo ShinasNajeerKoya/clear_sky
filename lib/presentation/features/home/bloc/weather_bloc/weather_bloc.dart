@@ -11,6 +11,8 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   WeatherBloc(this.weatherUseCase) : super(WeatherState.initial()) {
     on<GetCityNameEvent>(_onGetCityNameEvent);
     on<FetchSearchResultsEvent>(_onFetchSearchResultsEvent);
+
+
   }
 
   void _onGetCityNameEvent(GetCityNameEvent event, Emitter<WeatherState> emit) async {

@@ -23,12 +23,21 @@ class _HomePageState extends State<HomePage> {
 
   int selectedIndex = 0;
 
+  String selectedCity = '';
+
 // event adding for BNB
   void onTabChange(int index) {
     context.read<BottomNavigationBloc>().add(
           TabChangeEvent(tabIndex: index),
         );
   }
+
+  // Future<void> _handleRefresh() async {
+  //   // Dispatch an event to update data for index 0
+  //   context.read<BottomNavigationBloc>().add(
+  //         TabChangeEvent(tabIndex: 0), // Assuming index 0 is for HomeScreenBody
+  //       );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +46,9 @@ class _HomePageState extends State<HomePage> {
     final width = SizeConfig.screenWidth;
     return BlocListener<BottomNavigationBloc, BottomNavigationState>(
       listener: (context, state) {
-        //
+        if (state is NavigateToHomeState) {
+          Navigator.popAndPushNamed(context, '/home', arguments: state.city);
+        }
       },
       child: BlocBuilder<BottomNavigationBloc, BottomNavigationState>(
         builder: (context, state) {
@@ -49,16 +60,16 @@ class _HomePageState extends State<HomePage> {
             body: Container(
               height: height,
               width: width,
-              decoration: BoxDecoration(
-                color: Colors.orange.shade100,
-                image: const DecorationImage(
-                  image: AssetImage("assets/bgs/forest_bg.jpg"),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                image: DecorationImage(
+                  image: AssetImage("assets/bgs/clear_sky_bg_2.png"),
                   fit: BoxFit.cover,
                 ),
               ),
               child: ClipRect(
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
+                  filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(15)),
                     child: _HomePageContent(

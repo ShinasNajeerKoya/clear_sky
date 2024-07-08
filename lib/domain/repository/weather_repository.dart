@@ -7,7 +7,7 @@ import 'package:clear_sky/data/services/weather_service.dart';
 class WeatherRepository {
   final WeatherService weatherService;
 
-  WeatherRepository(this.weatherService);
+    WeatherRepository(this.weatherService);
 
   Future<GeoData?> getGeoData(String cityName) async {
     GeoData? geoData;
@@ -33,8 +33,10 @@ class WeatherRepository {
       var response = await weatherService.getWeatherData(latitude: geoData.lat, longitude: geoData.lon);
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
+
         if (body is Map<String, dynamic>) {
           weatherData = WeatherData.fromJson(body);
+
         }
       }
     } catch (errorFound) {

@@ -10,10 +10,14 @@ class RouteGenerator {
     final args = settings.arguments;
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
+        return MaterialPageRoute(
+          builder: (_) => const OnboardingScreen(),
+        );
       case '/home':
         if (args is String) {
-          return MaterialPageRoute(builder: (_) => HomePage(query: args));
+          return MaterialPageRoute(
+            builder: (_) => HomePage(query: args),
+          );
         }
         return _errorRoute();
       default:

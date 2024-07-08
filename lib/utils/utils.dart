@@ -29,14 +29,14 @@ final List<Map<String, String>> countries = [
     'flag': 'assets/flags/uk.png',
   },
   {
-    'name': 'France',
-    'searchName': 'Paris',
-    'flag': 'assets/flags/france.png',
-  },
-  {
     'name': 'Japan',
     'searchName': 'Tokyo',
     'flag': 'assets/flags/japan.png',
+  },
+  {
+    'name': 'Argentina',
+    'searchName': 'Salta',
+    'flag': 'assets/flags/argentina.png',
   },
   {
     'name': 'United States Of America',
@@ -59,11 +59,6 @@ final List<Map<String, String>> countries = [
     'flag': 'assets/flags/uae.png',
   },
   {
-    'name': 'South Africa',
-    'searchName': 'Limpopo',
-    'flag': 'assets/flags/south_africa.png',
-  },
-  {
     'name': 'Brazil',
     'searchName': 'Salvador',
     'flag': 'assets/flags/brazil.png',
@@ -74,9 +69,14 @@ final List<Map<String, String>> countries = [
     'flag': 'assets/flags/canada.png',
   },
   {
-    'name': 'Argentina',
-    'searchName': 'Mendoza',
-    'flag': 'assets/flags/argentina.png',
+    'name': 'South Africa',
+    'searchName': 'Cape Town',
+    'flag': 'assets/flags/south_africa.png',
+  },
+  {
+    'name': 'France',
+    'searchName': 'Paris',
+    'flag': 'assets/flags/france.png',
   },
   {
     'name': 'Portugal',

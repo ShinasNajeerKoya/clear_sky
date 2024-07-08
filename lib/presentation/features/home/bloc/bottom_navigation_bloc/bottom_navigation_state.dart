@@ -10,7 +10,7 @@ abstract class BottomNavigationState extends Equatable {
 class InitialBottomNavigationState extends BottomNavigationState {
   final int tabIndex;
 
-  InitialBottomNavigationState({required this.tabIndex});
+  const InitialBottomNavigationState({required this.tabIndex});
 
   @override
   List<Object> get props => [tabIndex];
@@ -25,4 +25,12 @@ class SelectedTabIndexState extends BottomNavigationState {
   List<Object> get props => [tabIndex];
 }
 
+class NavigateToHomeState extends BottomNavigationState {
+  final String city;
+
+  const NavigateToHomeState({required this.city});
+
+  @override
+  List<Object> get props => [city];
+}
 

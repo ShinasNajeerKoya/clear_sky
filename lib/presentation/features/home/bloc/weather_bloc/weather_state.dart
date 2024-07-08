@@ -25,3 +25,5 @@ class WeatherState extends BaseState with EquatableMixin {
   @override
   List<Object?> get props => [weatherData, error, dataState];
 }
+
+class NavigateBackToHomeState extends WeatherState {}

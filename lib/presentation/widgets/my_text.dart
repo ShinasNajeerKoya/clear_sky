@@ -1,3 +1,4 @@
+import 'package:clear_sky/utils/size_configuration.dart';
 import 'package:flutter/material.dart';
 
 class MyText extends StatelessWidget {
@@ -28,10 +29,11 @@ class MyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Text(
       text,
       style: TextStyle(
-        fontSize: fontSize ?? 15.0,
+        fontSize: fontSize ?? SizeConfig.getFontSize(15.0),
         fontWeight: fontWeight ?? FontWeight.w200,
         color: fontColor ?? Colors.white,
         letterSpacing: letterSpacing ?? 0.0,
