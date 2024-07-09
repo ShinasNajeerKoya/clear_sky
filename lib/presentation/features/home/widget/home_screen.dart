@@ -140,25 +140,33 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomContainer(
       padding: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(12)),
-      height: SizeConfig.getHeight(55),
+      height: SizeConfig.getHeight(60),
       child: Row(
         children: [
           Expanded(
-            child: TextField(
-              style: const TextStyle(color: Colors.white),
-              controller: searchController,
-              decoration: InputDecoration(
-                hintText: "Search Weather...",
-                hintStyle: TextStyle(color: Colors.grey.shade400),
-                border: InputBorder.none,
+            child: Center(
+              child: TextField(
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: SizeConfig.getWidth(15),
+                ),
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: "Search Weather...",
+                  hintStyle: TextStyle(
+                    color: Colors.grey.shade400,
+                    fontSize: SizeConfig.getWidth(15),
+                  ),
+                  border: InputBorder.none,
+                ),
+                onSubmitted: (inputValue) {
+                  context.read<WeatherBloc>().add(
+                        FetchSearchResultsEvent(
+                          searchValue: searchController.text,
+                        ),
+                      );
+                },
               ),
-              onSubmitted: (inputValue) {
-                context.read<WeatherBloc>().add(
-                      FetchSearchResultsEvent(
-                        searchValue: searchController.text,
-                      ),
-                    );
-              },
             ),
           ),
           Icon(
@@ -337,7 +345,7 @@ class _SunriseSunsetContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(20)),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(15)),
       height: SizeConfig.getHeight(150),
       width: width,
       child: Row(

@@ -83,7 +83,7 @@ class _PopularScreenBodyState extends State<PopularScreenBody> {
           ),
         ),
         Positioned(
-          top: 57,
+          top: SizeConfig.getHeight(55),
           left: 0,
           right: 0,
           child: _TitleContainer(widget: widget),
@@ -107,9 +107,9 @@ class _TitleContainer extends StatelessWidget {
       width: widget.width,
       color: Colors.white.withOpacity(0.9),
       borderRadius: BorderRadius.circular(SizeConfig.getRadius(10)),
-      child: const MyText(
+      child: MyText(
         text: "Popular Places",
-        fontSize: 23,
+        fontSize: SizeConfig.getFontSize(23),
         fontWeight: FontWeight.bold,
         fontColor: Colors.black,
       ),
@@ -138,7 +138,12 @@ class _DetailsContainer extends StatelessWidget {
         log("ListView container $index is pressed");
         log("can pass query of container ${country['name']!} here");
 
-        context.read<BottomNavigationBloc>().add(NavigateToHomeEvent(city: country['searchName']!));
+        //navigating to home screen with data
+        context.read<BottomNavigationBloc>().add(
+              NavigateToHomeEvent(
+                city: country['searchName']!,
+              ),
+            );
       },
       height: SizeConfig.getHeight(180),
       width: widget.width,
@@ -152,21 +157,19 @@ class _DetailsContainer extends StatelessWidget {
       child: BlocProvider.value(
         value: weatherBlocList[index],
         child: BlocConsumer<WeatherBloc, WeatherState>(
-          listener: (context, state) {
-
-          },
+          listener: (context, state) {},
           builder: (context, state) {
             if (state.dataState == DataState.loading) {
               return const Center(
                   child: MyText(
-                text: "Loading values...",
+                text: "Loading Weather...",
               ));
             } else if (state.dataState == DataState.success) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: SizeConfig.getWidth(2).toInt(),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +183,7 @@ class _DetailsContainer extends StatelessWidget {
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CustomContainer(
                                     height: SizeConfig.getHeight(24),
@@ -199,7 +202,7 @@ class _DetailsContainer extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: SizeConfig.getFontSize(26),
                                       overflow: TextOverflow.ellipsis,
-                                      letterSpacing: 1,
+                                      letterSpacing: SizeConfig.getWidth(1),
                                     ),
                                   )
                                 ],
@@ -208,7 +211,7 @@ class _DetailsContainer extends StatelessWidget {
                                 text: CurrentTimeConversion.formatSecondsToReadableTime(
                                     state.weatherData!.timezone!),
                                 fontSize: SizeConfig.getFontSize(20),
-                                letterSpacing: 4,
+                                letterSpacing: SizeConfig.getWidth(4),
                               )
                             ],
                           ),
@@ -218,29 +221,33 @@ class _DetailsContainer extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    flex: 1,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CustomContainer(
-                          height: SizeConfig.getHeight(80),
-                          width: SizeConfig.getHeight(80),
-                          color: Colors.transparent,
-                          image: DecorationImage(
-                              image: AssetImage(weatherIcons[state.weatherData!.weather![0].icon] ??
-                                  'assets/weather_icons/weather_error.png')),
-                        ),
-                        MyText(
-                          text: "${state.weatherData!.main!.temp}°C",
-                          fontSize: SizeConfig.getFontSize(25),
-                          fontWeight: FontWeight.bold,
-                        ),
-                        MyText(
-                          text: "${state.weatherData!.weather![0].description}",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w100,
-                        ),
-                      ],
+                    flex: SizeConfig.getWidth(1).toInt(),
+                    child: CustomContainer(
+                      color: Colors.transparent,
+                      width: SizeConfig.getHeight(100),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CustomContainer(
+                            height: SizeConfig.getHeight(80),
+                            width: SizeConfig.getHeight(80),
+                            color: Colors.transparent,
+                            image: DecorationImage(
+                                image: AssetImage(weatherIcons[state.weatherData!.weather![0].icon] ??
+                                    'assets/weather_icons/weather_error.png')),
+                          ),
+                          MyText(
+                            text: "${state.weatherData!.main!.temp}°C",
+                            fontSize: SizeConfig.getFontSize(25),
+                            fontWeight: FontWeight.bold,
+                          ),
+                          MyText(
+                            text: "${state.weatherData!.weather![0].description}",
+                            fontSize: SizeConfig.getFontSize(16),
+                            fontWeight: FontWeight.w100,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],

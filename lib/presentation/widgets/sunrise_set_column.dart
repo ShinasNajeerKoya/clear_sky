@@ -22,7 +22,7 @@ class SunRiseSetColumn extends StatelessWidget {
         MyText(
           text: time,
           fontWeight: FontWeight.w600,
-          fontSize: 23,
+          fontSize: SizeConfig.getFontSize(23),
         ),
         Container(
           height: SizeConfig.getHeight(50),
@@ -37,7 +37,7 @@ class SunRiseSetColumn extends StatelessWidget {
         ),
         MyText(
           text: title,
-          fontSize: 13,
+          fontSize: SizeConfig.getFontSize(13),
         ),
       ],
     );

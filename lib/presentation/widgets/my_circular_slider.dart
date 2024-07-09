@@ -18,7 +18,10 @@ class MyCircularSlider extends StatelessWidget {
       max: 100,
       initialValue: double.parse("${state.weatherData!.main!.humidity}"),
       appearance: CircularSliderAppearance(
-        customWidths: CustomSliderWidths(handlerSize: 1.5, trackWidth: 2, progressBarWidth: 10),
+        customWidths: CustomSliderWidths(
+            handlerSize: SizeConfig.getFontSize(1.5),
+            trackWidth: SizeConfig.getWidth(2),
+            progressBarWidth: SizeConfig.getWidth(10)),
         animationEnabled: true,
         size: SizeConfig.getHeight(125),
         customColors: CustomSliderColors(
@@ -31,15 +34,15 @@ class MyCircularSlider extends StatelessWidget {
           ],
         ),
         infoProperties: InfoProperties(
-            mainLabelStyle: const TextStyle(
-              color: Colors.white, // Change the font color of the initial value here
-              fontSize: 25,
+            mainLabelStyle: TextStyle(
+              color: Colors.white,
+              fontSize: SizeConfig.getFontSize(25),
               fontWeight: FontWeight.bold,
             ),
             bottomLabelText: "Humidity",
             bottomLabelStyle: TextStyle(
-              color: Colors.grey.shade700, // Change the font color of the initial value here
-              fontSize: 15,
+              color: Colors.grey.shade700,
+              fontSize: SizeConfig.getFontSize(15),
               fontWeight: FontWeight.bold,
             )),
       ),

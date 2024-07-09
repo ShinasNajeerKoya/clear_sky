@@ -72,12 +72,12 @@ class OnboardingScreen extends StatelessWidget {
                         fontColor: Colors.grey,
                       ),
                       MyText(
-                        text: "weather",
+                        text: "weather ",
                         fontSize: SizeConfig.getFontSize(25),
                         fontWeight: FontWeight.w400,
                       ),
                       MyText(
-                        text: " guide!",
+                        text: "guide!",
                         fontSize: SizeConfig.getFontSize(25),
                         fontWeight: FontWeight.w100,
                         fontColor: Colors.grey,
@@ -90,8 +90,6 @@ class OnboardingScreen extends StatelessWidget {
                     onTap: () {
                       context.read<BottomNavigationBloc>().add(const NavigateToHomeEvent(city: "Sydney"));
                     },
-                    // height: SizeConfig.getHeight(60),
-                    // width: SizeConfig.getWidth(190),
                     padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(20)),
                     margin: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(100)),
                     borderRadius: BorderRadius.circular(SizeConfig.getRadius(16)),
