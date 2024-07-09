@@ -61,8 +61,9 @@ To get started with ClearSky, follow these steps:
   <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_popular_1.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_popular_1_extended.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_popular_result.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_searching.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_search_result.png" width="160" />
 
   <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_search_error.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_error.png" width="160" /> 
-    <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_search_error.png" width="300" height ="160" /> 
-    <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_error.png" width="160" height ="160"/> 
+  
+<img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_search_error.png" width="300" height ="160" />     
+<img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_error.png" width="160" height ="160"/> 
 
 
 ## Contributing
