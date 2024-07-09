@@ -20,10 +20,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenBody extends StatelessWidget {
   final TextEditingController searchController;
+  final double height;
   final double width;
   final String query;
 
-  const HomeScreenBody({super.key, required this.searchController, required this.width, required this.query});
+  const HomeScreenBody(
+      {super.key,
+      required this.searchController,
+      required this.width,
+      required this.query,
+      required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +46,17 @@ class HomeScreenBody extends StatelessWidget {
                 ),
               );
             } else if (state.dataState == DataState.error) {
-              return CustomContainer(
-                height: SizeConfig.getHeight(715),
-                width: width,
-                image: const DecorationImage(
-                    image: AssetImage("assets/errors/search_error.png"), fit: BoxFit.fitWidth),
+              return SingleChildScrollView(
+                child: CustomContainer(
+                  height: height,
+                  width: width,
+                  color: Colors.transparent,
+                  image: DecorationImage(
+                      image: AssetImage(width < height
+                          ? "assets/errors/search_error_portrait.png"
+                          : "assets/errors/search_error_landscape.png"),
+                      fit: BoxFit.fitWidth),
+                ),
               );
             } else if (state.dataState == DataState.success) {
               return ListView(
@@ -94,11 +106,17 @@ class HomeScreenBody extends StatelessWidget {
                 ],
               );
             } else {
-              return CustomContainer(
-                height: SizeConfig.getHeight(715),
-                width: width,
-                image: const DecorationImage(
-                    image: AssetImage("assets/errors/home_error.png"), fit: BoxFit.fitWidth),
+              return SingleChildScrollView(
+                child: CustomContainer(
+                  height: height,
+                  width: width,
+                  color: Colors.transparent,
+                  image: DecorationImage(
+                      image: AssetImage(width < height
+                          ? "assets/errors/homepage_error_portrait.png"
+                          : "assets/errors/homepage_error_landscape.png"),
+                      fit: BoxFit.fitWidth),
+                ),
               );
             }
           },

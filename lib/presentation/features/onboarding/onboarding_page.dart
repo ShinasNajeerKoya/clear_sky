@@ -25,6 +25,7 @@ class OnboardingScreen extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
+          alignment: Alignment.bottomCenter,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: const AssetImage("assets/bgs/clear_sky_bg_2.png"),
@@ -35,80 +36,86 @@ class OnboardingScreen extends StatelessWidget {
               ),
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              MyText(
-                text: "Weather",
-                fontWeight: FontWeight.w900,
-                fontSize: SizeConfig.getFontSize(65),
-                fontColor: Colors.white,
-              ),
-              // Add some space between the texts
-              MyText(
-                text: "On your",
-                fontWeight: FontWeight.w900,
-                fontSize: SizeConfig.getFontSize(65),
-                fontColor: Colors.grey,
-              ),
-              MyText(
-                text: "Terms",
-                fontWeight: FontWeight.w900,
-                fontSize: SizeConfig.getFontSize(65),
-                fontColor: Colors.grey,
-              ),
-              SizedBox(height: SizeConfig.getHeight(15)),
-              Row(
-                mainAxisSize: MainAxisSize.min, // Avoid extra space
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   MyText(
-                    text: "Your pocket ",
-                    fontSize: SizeConfig.getFontSize(25),
-                    fontWeight: FontWeight.w100,
+                    text: "Weather",
+                    fontWeight: FontWeight.w900,
+                    fontSize: SizeConfig.getFontSize(65),
+                    fontColor: Colors.white,
+                  ),
+                  // Add some space between the texts
+                  MyText(
+                    text: "On your",
+                    fontWeight: FontWeight.w900,
+                    fontSize: SizeConfig.getFontSize(65),
                     fontColor: Colors.grey,
                   ),
                   MyText(
-                    text: "weather",
-                    fontSize: SizeConfig.getFontSize(25),
-                    fontWeight: FontWeight.w400,
-                  ),
-                  MyText(
-                    text: " guide!",
-                    fontSize: SizeConfig.getFontSize(25),
-                    fontWeight: FontWeight.w100,
+                    text: "Terms",
+                    fontWeight: FontWeight.w900,
+                    fontSize: SizeConfig.getFontSize(65),
                     fontColor: Colors.grey,
                   ),
-                ],
-              ),
+                  SizedBox(height: SizeConfig.getHeight(15)),
+                  Row(
+                    mainAxisSize: MainAxisSize.min, // Avoid extra space
+                    children: [
+                      MyText(
+                        text: "Your pocket ",
+                        fontSize: SizeConfig.getFontSize(25),
+                        fontWeight: FontWeight.w100,
+                        fontColor: Colors.grey,
+                      ),
+                      MyText(
+                        text: "weather",
+                        fontSize: SizeConfig.getFontSize(25),
+                        fontWeight: FontWeight.w400,
+                      ),
+                      MyText(
+                        text: " guide!",
+                        fontSize: SizeConfig.getFontSize(25),
+                        fontWeight: FontWeight.w100,
+                        fontColor: Colors.grey,
+                      ),
+                    ],
+                  ),
 
-              SizedBox(height: SizeConfig.getHeight(40)),
-              CustomContainer(
-                onTap: () {
-                  context.read<BottomNavigationBloc>().add(const NavigateToHomeEvent(city: "Sydney"));
-                },
-                height: SizeConfig.getHeight(60),
-                width: SizeConfig.getWidth(190),
-                borderRadius: BorderRadius.circular(SizeConfig.getRadius(16)),
-                color: const Color(0xff0d5015),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.shade900,
-                    offset: const Offset(0.0, 10.0),
-                    blurRadius: 10.0,
-                    spreadRadius: -5.0,
+                  SizedBox(height: SizeConfig.getHeight(40)),
+                  CustomContainer(
+                    onTap: () {
+                      context.read<BottomNavigationBloc>().add(const NavigateToHomeEvent(city: "Sydney"));
+                    },
+                    // height: SizeConfig.getHeight(60),
+                    // width: SizeConfig.getWidth(190),
+                    padding: EdgeInsets.symmetric(vertical: SizeConfig.getHeight(20)),
+                    margin: EdgeInsets.symmetric(horizontal: SizeConfig.getWidth(100)),
+                    borderRadius: BorderRadius.circular(SizeConfig.getRadius(16)),
+                    color: const Color(0xff0d5015),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade900,
+                        offset: const Offset(0.0, 10.0),
+                        blurRadius: 10.0,
+                        spreadRadius: -5.0,
+                      ),
+                    ],
+                    child: MyText(
+                      text: "Get Started",
+                      fontSize: SizeConfig.getFontSize(20),
+                      fontColor: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: SizeConfig.getWidth(2),
+                    ),
                   ),
+                  SizedBox(height: SizeConfig.getHeight(70)),
                 ],
-                child: MyText(
-                  text: "Get Started",
-                  fontSize: SizeConfig.getFontSize(20),
-                  fontColor: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: SizeConfig.getWidth(2),
-                ),
               ),
-              SizedBox(height: SizeConfig.getHeight(70)),
-            ],
+            ),
           ),
         ),
       ),

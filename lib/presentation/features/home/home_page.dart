@@ -60,10 +60,12 @@ class _HomePageState extends State<HomePage> {
             body: Container(
               height: height,
               width: width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
-                  image: AssetImage("assets/bgs/clear_sky_bg_2.png"),
+                  image: AssetImage(width < height
+                      ? "assets/bgs/clear_sky_bg_2.png"
+                      : "assets/bgs/clear_sky_bg_landscape.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -116,6 +118,7 @@ class _HomePageContent extends StatelessWidget {
       case 0:
         return HomeScreenBody(
           searchController: searchController,
+          height: height,
           width: width,
           query: query,
         );
