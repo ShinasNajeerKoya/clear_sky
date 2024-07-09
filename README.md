@@ -44,7 +44,7 @@ To get started with ClearSky, follow these steps:
 4. **API Key:**
 
 ```
-   Obtain an API key from [OpenWeatherMap](https://openweathermap.org/) and replace `YOUR_API_KEY` in the codebase with your actual API key.
+   Obtain an API key from [OpenWeatherMap](https://openweathermap.org/) and replace `API_KEY` in the codebase with your actual API key.
 ```
 
 5. **flutter run:**
