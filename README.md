@@ -1,16 +1,79 @@
-# clear_sky
+# Clear Sky
 
-A new Flutter project.
+## Overview
 
-## Getting Started
+Clear Sky is a mobile application designed to provide users with current weather information based on their location or search queries. It utilizes the OpenWeatherMap API to fetch weather data and offers a user-friendly interface for viewing weather conditions. Additionally, the app includes popular places with pre-fed data for quick access to weather information of popular tourist destinations.
 
-This project is a starting point for a Flutter application.
+## Features
 
-A few resources to get you started if this is your first Flutter project:
+- **Current Weather**: Display current temperature, weather conditions, wind speed, humidity, etc.
+- **Search Functionality**: Allow users to search for weather information by city name.
+- **Popular Places**: Provide weather data for popular tourist destinations with pre-fed information for quick access.
+- **Detailed Weather Information**: Provide detailed information such as sunrise/sunset times, max/min temperatures, and comfort levels.
+- **User-Friendly Interface**: Intuitive design for easy navigation and viewing of weather data.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Technologies Used
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Flutter**: Front-end development framework for cross-platform mobile apps.
+- **Dart**: Programming language used with Flutter.
+- **OpenWeatherMap API**: External API used for fetching weather data.
+
+
+## Installation
+
+To get started with ClearSky, follow these steps:
+
+1. **Clone the repository:**
+
+```
+    git clone https://github.com/ShinasNajeerKoya/clear_sky
+```
+
+2. **Navigate to the project directory:**
+
+```
+   cd clear_sky
+```
+
+3. **Install dependencies:**
+
+```
+   flutter pub get
+```
+
+4. **API Key:**
+
+```
+   Obtain an API key from [OpenWeatherMap](https://openweathermap.org/) and replace `YOUR_API_KEY` in the codebase with your actual API key.
+```
+
+5. **flutter run:**
+
+```
+   flutter run
+```
+
+
+## Screenshots
+
+
+
+## Contributing
+
+Contributions are welcome! Fork the repository and submit a pull request with your enhancements.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- **OpenWeatherMap**: Providing weather data through their API.
+- **Flutter Community**: Continuous support and resources for Flutter development.
+
+## Contact
+
+For any inquiries or feedback, please contact,
+
+- Email: [shinasnajeerkoya@gmail.com](mailto:shinasnajeerkoya@gmail.com)
+- GitHub: https://github.com/ShinasNajeerKoya
