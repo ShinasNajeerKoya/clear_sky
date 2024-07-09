@@ -85,7 +85,7 @@ class OnboardingScreen extends StatelessWidget {
               SizedBox(height: SizeConfig.getHeight(40)),
               CustomContainer(
                 onTap: () {
-                  context.read<BottomNavigationBloc>().add(const NavigateToHomeEvent(city: "Bahrain"));
+                  context.read<BottomNavigationBloc>().add(const NavigateToHomeEvent(city: "Sydney"));
                 },
                 height: SizeConfig.getHeight(60),
                 width: SizeConfig.getWidth(190),

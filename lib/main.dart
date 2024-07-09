@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => BottomNavigationBloc()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Weather App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

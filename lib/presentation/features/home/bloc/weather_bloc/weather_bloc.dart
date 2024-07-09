@@ -21,7 +21,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     try {
       WeatherData? weatherData = await weatherUseCase.apiCall(event.cityName);
       if (weatherData == null) {
-        emit(state..dataState = DataState.error);
+        emit(state.copyWith()..dataState = DataState.error);
       } else {
         emit(state.copyWith(weatherData: weatherData)..dataState = DataState.success);
       }
