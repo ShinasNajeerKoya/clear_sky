@@ -44,7 +44,7 @@ To get started with ClearSky, follow these steps:
 4. **API Key:**
 
 ```
-   Obtain an API key from [OpenWeatherMap](https://openweathermap.org/) and replace `YOUR_API_KEY` in the codebase with your actual API key.
+   Obtain an API key from [OpenWeatherMap](https://openweathermap.org/) and replace `API_KEY` in the codebase with your actual API key.
 ```
 
 5. **flutter run:**
@@ -59,6 +59,10 @@ To get started with ClearSky, follow these steps:
   <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_onboarding.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_home_loading.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_home_1.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_home_1_extended.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_popular_loading.png" width="160" />
 
   <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_popular_1.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_popular_1_extended.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_popular_result.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_searching.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_search_result.png" width="160" />
+
+  <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_search_error.png" width="160" /> <img src="https://github.com/ShinasNajeerKoya/clear_sky/blob/master/assets/application_snapshots/clear_sky_error.png" width="160" /> 
+  
+
 
 
 ## Contributing
