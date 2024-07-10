@@ -32,13 +32,6 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
-  // Future<void> _handleRefresh() async {
-  //   // Dispatch an event to update data for index 0
-  //   context.read<BottomNavigationBloc>().add(
-  //         TabChangeEvent(tabIndex: 0), // Assuming index 0 is for HomeScreenBody
-  //       );
-  // }
-
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

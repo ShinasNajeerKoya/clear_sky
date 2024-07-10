@@ -146,11 +146,12 @@ class _SearchBar extends StatelessWidget {
           Expanded(
             child: Center(
               child: TextField(
+                key: Key("searchBar"),
+                controller: searchController,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: SizeConfig.getWidth(15),
                 ),
-                controller: searchController,
                 decoration: InputDecoration(
                   hintText: "Search Weather...",
                   hintStyle: TextStyle(

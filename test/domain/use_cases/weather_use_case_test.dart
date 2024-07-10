@@ -34,12 +34,19 @@ void main() {
   when(() => mockWeatherRepository.getWeatherData(geoData)).thenAnswer((_) async => weatherData);
 
   blocTest<WeatherBloc, WeatherState>(
+    //description
     'Successful Data Received : emitting loading and success state when the event is added and response is success',
+
+    //arrange
     build: () {
       return WeatherBloc(weatherUseCase!);
     },
+
+    //act
     //adding event here
     act: (bloc) => bloc.add(const GetCityNameEvent("italy")),
+
+    //expect
     expect: () => [
       WeatherState.initial().copyWith(weatherData: null, error: null)..dataState = DataState.loading,
       WeatherState.initial().copyWith(weatherData: weatherData, error: null)..dataState = DataState.success,
@@ -47,12 +54,20 @@ void main() {
   );
 
   blocTest<WeatherBloc, WeatherState>(
+    //description
     'Error Caught : emitting loading and error state when the event is added and response is error',
+
+    //arrange
     build: () {
       when(() => mockWeatherRepository.getGeoData("italy")).thenThrow(Exception("Failed to fetch data"));
       return WeatherBloc(weatherUseCase!);
     },
+
+    //act
+    //adding event here
     act: (bloc) => bloc.add(const GetCityNameEvent("italy")),
+
+    //expect
     expect: () => [
       WeatherState.initial().copyWith(weatherData: null, error: null)..dataState = DataState.loading,
       WeatherState.initial().copyWith(weatherData: null, error: "Exception: Failed to fetch data")
